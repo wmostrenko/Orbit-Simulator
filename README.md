@@ -12,21 +12,59 @@ As both a computer science and physics student, I have taken many physics classe
 - As a user, I would like to add multiple Objects to my Simulations and specify their mass and initial velocity.
 - As a user, I would like to view a list of my Objects in my Simulations.
 - As a user, I would like to enter the Reference Frame of each object from my list of Objects in my Simulation.
-- As a user, I would like to change the speed/pause my Simulation.
-- As a user, I would like to resize my window which will expand the Grid but keep all the UI elements the same size.
 
 ## Class Documentation
 
-### Simulation Class (very rough draft)
 
-The current plan is to have the Simulation class (which has a list of Objects and a Grid) be where most of the backbone "computations" of the application occur. The Simulation class should be responsible for the following:
-1. Updating the location of each object given the velocity of each Object.
-1. Updating the velocity of each object given the acceleration of each Object.
-2. Updating the acceleration on each Object given the locations of all the other Objects.
-3. Updating the tensor object of the Grid given the current location and mass of each Object.
-Each of the above will likely represent the main methods in the Simulation class. The Simulation class should represent the mathematical backbone of the application. Also, the Simulation class would always have an Object (unvisable to the user) that has 0 mass and is unaffected by gravity. This Object would be considered the Stationary Observer and will allow users to switch reference frames between Objects and the Stationary Observer (since both these things are really just Objects). The Stationary Observer will be initialized with 0 velocity, 0 mass, and a position centered in the window.
+### Simulation Overview
+Each `Simulation` is the mathematical backbone of the application. It will manage updating its `Object` elements (position, velocity, acceleration), updating the `Grid` tensor, and switching/maintaining the current reference frame. To do so, each Simulation will have the following elements:
 
-~~Furthermore, there should be something (I'm not sure whether it should be a class or method somewhere yet) that takes in a Simulation, and depending on the current reference frame (which corresponds to an the position and velocity of an Object), translates the positions/velocities of all the other Objects such that the Object that the reference frame is corresponding to has a centered position and a zero velocity. This would be the cleanest solution as there would be one main simulation (in the rest reference frame) where all the basic computation happens, then for each tick of the clock, the main simulaiton.~~
+1. `stationaryReferenceFrame` is of type `Object`. This represents the stationary reference frame in each simulation. Thus it is initialized with a centered position, 0 velocity, and 0 mass.
+2. `currentReferenceFrame` is of type `Object`. This points to whatever `Object` the user has set as current reference frame that the user would like to enter. `currentReferenceFrame` is initialized to point to `stationaryReferenceFrame`.
+3. `objects` is a list of `Object`. `objects` is initialized with the `stationaryReferenceFrame`.
+4. `grid` is of type `Grid`. Since the design of `Grid` heavily depends on the design of the UI elements, this will not be implimented for Phase 1.
 
-Another approach would be to have a "switch reference frames" method in the Simulation class that would be called by the user when they want to "switch reference frames." This method will take in an Object and point ReferenceFrame to that object. Then there will be another "update reference frame" method that will be called each time the simulation loops. This method will modify all other Objects' properties (position, velocity, acceleration) such that the ReferenceFrame (and in turn the object it points to) will now have 0 velocity, 0 acceleration, and a centred position. When the Simulation updates the position/velocity/accelerations, it will do so even to the ReferenceFrame, but immediatly after, will call this "update reference frame" method that will ensure the ReferenceFrame object still has 0 velocity, 0 acceleration, and a centred position.
+For `Simulation` to work as intended, it will have the following "main" methods:
 
+1. `updateObject()` takes an `Object` and updates its elements using the following helper methods:
+    1. `updateLocation()` takes an `Object` and updates its location using that object's current velocity.
+    2. `updateVelocity()` takes an `Object` and updates its velocity using that object's current acceleration.
+    3. `updateAcceleration()` takes an `Object` and updates its acceleration using that object's current acceleration and the acceleration applied by each `Object` in `objects`.
+2. `switchReferenceFrame()` takes an `Object` and is called by the main method when the user wants to switch reference frames. It updates `currentReferenceFrame` by pointing it to whatever `Object` was called as a parameter.
+3. `updateReferenceFrame()` takes no parameters and should call the following helper methods:
+    1. `updateAllObjects()` which updates all `Object` in `objects`such that their elements are changed by the elements of `currentReferenceFrame`.
+    2. `updateCurrentReferenceFrame` which resets the elements of `currentReferenceFrame` so it has a centered position, 0 velocity, and 0 acceleration.
+
+
+### UI Overview
+For Phase 1, the UI will be very simple. The goal for now is to provide a place to call the main methods in `Simulation` depending on what the user would like to do. The user should be prompted to create a new simulation or open an existing one (which we'll impliement in Phase 2). Then the simulation should run (by looping a series of methods in `Simulation`) and the user should be prompted to add an `Object` to their `Simulation`, or to get the elements of an `Object` in their `Simulation`. To do so, `UI` will need the following elements:
+
+1. `simulations` which is a list of `Simulation`.
+2. `runningSimulation` is of type `Boolean` and is true when a simulation is running. `runningSimulation` is initialized to false.
+3. `runningProgram` is of type `Boolean` and is true when the program is running. `runningProgram` in initialized to true.
+
+Furthermore, for `UI` to work as intended, the main method will be a loop that loops while `runningProgram` is true. In this loop, the user will be promted to either...
+
+1. Create a new `Simulation`.
+2. Open an existing `Simulation` from simulations.
+3. Close the program.
+
+If the user decides to open an existing `Simulation`, then the UI will prompt the user to choose a simulation. Once the user has choosen a simulation, the program will run `runSimulation()` which will take a `Simulation` as a parameter and is a loop that loops only while `runningSimulation` is true. For every loop, it prompts the user to either...
+
+1. Add an `Object`.
+2. Change reference frame.
+3. Get the elements for an `Object`.
+4. Update the `Simulation`.
+5. Close the `Simulation`.
+
+
+### Object Overview
+An `Object` is simply and object in a `Simulation` (i.e. think of an `Object` in a `Simulation` like a planet in space). Objects have the following elements:
+
+1. `xPosition` which is a number representing the x position of the object.
+2. `yPosition` which is a number representing the y position of the object.
+3. `xVelocity` which is a number representing the x velocity of the object.
+4. `yVelocity` which is a number representing the y velocity of the object.
+5. `xAcceleration` which is a number representing the x acceleration of the object. This is initialized as 0.
+6. `yAcceleration` which is a number representing the y acceleration of the object. This is initialized as 0.
+7. `mass` which is a number representing the mass of the object.
