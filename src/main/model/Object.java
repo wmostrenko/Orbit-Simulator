@@ -29,7 +29,48 @@ public class Object {
         this.yAcceleration = 0;
     }
 
-    public int getMass() {
+    /* 
+     * REQUIRES: timeStep >= 0
+     * MODIFIES: object
+     * EFFECTS: Updates object's position, velocity, and acceleration.
+     */
+    public void updateObject(int timeStep, int deltaXAcceleration, int deltaYAcceleration) {
+        updatePosition(timeStep);
+        updateVelocity(timeStep);
+        updateAcceleration(timeStep, deltaXAcceleration, deltaYAcceleration);
+    }
+
+    /* 
+     * REQUIRES: timeStep >= 0
+     * MODIFIES: object
+     * EFFECTS: Updates object's position.
+     */
+    public void updatePosition(int timeStep) {
+        this.xPosition += this.xVelocity * timeStep;
+        this.yPosition += this.yVelocity * timeStep;
+    }
+
+    /* 
+     * REQUIRES: timeStep >= 0
+     * MODIFIES: object
+     * EFFECTS: Updates object's velocity.
+     */
+    public void updateVelocity(int timeStep) {
+        this.xVelocity += this.xAcceleration * timeStep;
+        this.yVelocity += this.yAcceleration * timeStep;
+    }
+
+    /* 
+     * REQUIRES: timeStep >= 0
+     * MODIFIES: object
+     * EFFECTS: Updates object's acceleration given its change in acceleration.
+     */
+    public void updateAcceleration(int timeStep, int deltaXAcceleration, int deltaYAcceleration) {
+        this.xAcceleration += deltaXAcceleration;
+        this.yAcceleration += deltaYAcceleration;
+    }
+
+    public double getMass() {
         return this.mass;
     }
     

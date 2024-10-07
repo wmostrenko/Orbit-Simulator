@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ObjectTest {
-
     Object testObject;
     
     @BeforeEach
@@ -24,4 +23,32 @@ public class ObjectTest {
         assertEquals(0, testObject.getXAcceleration());
         assertEquals(0, testObject.getYAcceleration());
     }
+
+    @Test
+    void updatePositionTest() {
+        testObject.updatePosition(1);
+        assertEquals(6, testObject.getXPosition());
+    }
+
+    @Test
+    void updateAcceleration() {
+        testObject.updateAcceleration(1, 2, 0);
+        assertEquals(2, testObject.getXAcceleration());
+    }
+
+    @Test
+    void updateVelocityTest() {
+        testObject.updateAcceleration(1, 2, 0);
+        testObject.updateVelocity(1);
+        assertEquals(6, testObject.getXVelocity());
+    }
+
+    @Test
+    void updateObjectTest() {
+        testObject.updateObject(1, 2, 0);
+        assertEquals(6, testObject.getXPosition());
+        assertEquals(6, testObject.getXVelocity());
+        assertEquals(2, testObject.getXAcceleration());
+    }
+
 }

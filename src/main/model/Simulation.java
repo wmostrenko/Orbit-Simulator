@@ -15,6 +15,7 @@ public class Simulation {
     private ArrayList<Object> objects;
     private static int ORIGINX;
     private static int ORIGINY;
+    private static int timeStep = 1;
 
     /*
      * EFFECTS: initializes stationaryReferenceFrame to a new Object(),
@@ -31,19 +32,21 @@ public class Simulation {
 
     /* 
      * MODIFIES: this.
-     * EFFECTS: Creates a new Object given parameters and adds it to obejects.
+     * EFFECTS: Adds object it to obejects.
      */
-    public void addObject(String name, int mass, int xPosition, int yPosition, int xVelocity, int yVelocity) {
+    public void addObject(Object object) {
         // TODO
     }
 
     /* 
      * MODIFIES: this.
-     * EFFECTS: Updates object's position, velocity, and acceleration.
+     * EFFECTS: Removes object from objects.
      */
-    public void updateObject(Object object) {
+    public void removeObject(Object object) {
         // TODO
     }
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /* 
      * MODIFIES: this.
@@ -62,4 +65,15 @@ public class Simulation {
     public void updateReferenceFrame() {
         // TODO
     }
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    public Object getCurrentReferenceFrame() {
+        // TODO
+    }
+
+    public int getNumberOfObjects() {
+        // TODO
+    }
+
 }
