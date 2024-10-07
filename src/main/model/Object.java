@@ -35,9 +35,9 @@ public class Object {
      * EFFECTS: Updates object's position, velocity, and acceleration.
      */
     public void updateObject(int timeStep, int deltaXAcceleration, int deltaYAcceleration) {
-        updatePosition(timeStep);
+        updateAcceleration(deltaXAcceleration, deltaYAcceleration);    
         updateVelocity(timeStep);
-        updateAcceleration( deltaXAcceleration, deltaYAcceleration);
+        updatePosition(timeStep);
     }
 
     /* 

@@ -14,8 +14,8 @@ public class SimulationTest {
     void runBefore() {
         testSimulation = new Simulation();
 
-        testObject1 = new Object((int)(Math.pow(10, 11)), 1, 0, 0, 0);
-        testObject2 = new Object(1, 0, 0, 1, 0);
+        testObject1 = new Object(1, 0, 0, 0, 0);
+        testObject2 = new Object(100, 10, 0, 0, 0);
     }
 
     @Test

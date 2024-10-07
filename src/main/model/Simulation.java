@@ -64,21 +64,18 @@ public class Simulation {
      */
     public int netDeltaXAcceleration(Object object, ArrayList<Object> objects) {
         int netDeltaXAcceleration = 0;
-        for (int i = 0; i < (objects.size() - 1); i++) {
+        for (int i = 0; i < objects.size() - 1; i++) {
             Object currentObject = objects.get(i);
-            if (object.equals(currentObject)) {
-                continue;
+            int deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
+            int deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
+            int deltaPosition = (int)(Math.hypot(deltaXPosition, deltaYPosition));
+            if (deltaXPosition > 0) {
+                netDeltaXAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaXPosition);
+            } else if (deltaXPosition < 0) {
+                netDeltaXAcceleration -= deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaXPosition);
             } else {
-                int deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
-                int deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
-                int deltaPosition = (int)(Math.hypot(deltaXPosition, deltaYPosition));
-                if (deltaXPosition > 0) {
-                    netDeltaXAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaXPosition);
-                } else if (deltaXPosition < 0) {
-                    netDeltaXAcceleration -= deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaXPosition);
-                } else {
-                    continue;
-                }
+                i++;
+                continue;
             }
         }
         return netDeltaXAcceleration;
@@ -107,7 +104,7 @@ public class Simulation {
     }
 
     public int deltaAcclerationFrom(int mass, int deltaPosition, int deltaAxisPosition) {
-        return (int)(6.67 * Math.pow(10, -11) * (double)(mass) * (double)(deltaAxisPosition) / Math.pow(deltaPosition, 3));
+        return 13 * mass * deltaAxisPosition / (int)(Math.pow(deltaPosition, 3));
     }
 
     public int deltaPosition(int position1, int position2) {

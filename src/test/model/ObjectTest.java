@@ -46,7 +46,7 @@ public class ObjectTest {
     @Test
     void updateObjectTest() {
         testObject.updateObject(1, 2, 0);
-        assertEquals(6, testObject.getXPosition());
+        assertEquals(8, testObject.getXPosition());
         assertEquals(6, testObject.getXVelocity());
         assertEquals(2, testObject.getXAcceleration());
     }
