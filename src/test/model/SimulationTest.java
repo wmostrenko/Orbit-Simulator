@@ -37,4 +37,20 @@ public class SimulationTest {
         testSimulation.removeObject(testObject1);
         assertEquals(1, testSimulation.getNumberOfObjects());
     }
+
+    @Test
+    void testStandardUpdateObjects() {
+        testSimulation.addObject(testObject1);
+        testSimulation.addObject(testObject2);
+        testSimulation.standardUpdateObjects();
+        assertEquals(0, testObject1.getXAcceleration());
+        assertEquals(0, testObject1.getXVelocity());
+        assertEquals(1, testObject1.getXPosition());
+
+        assertEquals(7, testObject2.getXAcceleration());
+        assertEquals(1, testObject2.getXVelocity());
+        assertEquals(0, testObject2.getXPosition());
+    }
+
+
 }

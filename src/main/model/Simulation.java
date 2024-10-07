@@ -39,6 +39,7 @@ public class Simulation {
     }
 
     /* 
+     * REQUIRES: objects.size() > 0
      * MODIFIES: this.
      * EFFECTS: Removes object from objects.
      */
@@ -46,27 +47,14 @@ public class Simulation {
         // TODO
     }
 
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
     /* 
      * MODIFIES: this.
-     * EFFECTS: Points currentReferenceFrame to object
+     * EFFECTS: Updates the properties of each Obejct in objects with respect to the
+     * gravitational force between all the objects.
      */
-    public void switchReferenceFrame(Object object) {
+    public void standardUpdateObjects() {
         // TODO
     }
-
-    /* 
-     * MODIFIES: this.
-     * EFFECTS: Ensures currentReferenceFrame stays at origin with zero velocity/acceleration
-     * and updates other Objects in objects so relative positions/velocities/accelerations
-     * remain constant.
-     */
-    public void updateReferenceFrame() {
-        // TODO
-    }
-
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public Object getCurrentReferenceFrame() {
         // TODO
