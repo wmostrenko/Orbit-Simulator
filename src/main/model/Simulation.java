@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import model.Object;
 
 /*
@@ -23,8 +25,8 @@ public class Simulation {
     public Simulation() {
         stationaryReferenceFrame = new Object(0, ORIGINX, ORIGINY, 0, 0);
         currentReferenceFrame = stationaryReferenceFrame;
-        objects = new ArrayList();
-        objects.addObject(stationaryReferenceFrame);
+        objects = new ArrayList<Object>();
+        objects.add(stationaryReferenceFrame);
     }
 
     /* 
