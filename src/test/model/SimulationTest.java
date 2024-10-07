@@ -1,7 +1,5 @@
 package model;
 
-import model.Object;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

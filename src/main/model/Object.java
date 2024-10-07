@@ -37,7 +37,7 @@ public class Object {
     public void updateObject(int timeStep, int deltaXAcceleration, int deltaYAcceleration) {
         updatePosition(timeStep);
         updateVelocity(timeStep);
-        updateAcceleration(timeStep, deltaXAcceleration, deltaYAcceleration);
+        updateAcceleration( deltaXAcceleration, deltaYAcceleration);
     }
 
     /* 
@@ -65,12 +65,12 @@ public class Object {
      * MODIFIES: object
      * EFFECTS: Updates object's acceleration given its change in acceleration.
      */
-    public void updateAcceleration(int timeStep, int deltaXAcceleration, int deltaYAcceleration) {
+    public void updateAcceleration(int deltaXAcceleration, int deltaYAcceleration) {
         this.xAcceleration += deltaXAcceleration;
         this.yAcceleration += deltaYAcceleration;
     }
 
-    public double getMass() {
+    public int getMass() {
         return this.mass;
     }
     

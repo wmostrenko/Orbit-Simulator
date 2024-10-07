@@ -32,13 +32,13 @@ public class ObjectTest {
 
     @Test
     void updateAcceleration() {
-        testObject.updateAcceleration(1, 2, 0);
+        testObject.updateAcceleration(2, 0);
         assertEquals(2, testObject.getXAcceleration());
     }
 
     @Test
     void updateVelocityTest() {
-        testObject.updateAcceleration(1, 2, 0);
+        testObject.updateAcceleration(2, 0);
         testObject.updateVelocity(1);
         assertEquals(6, testObject.getXVelocity());
     }

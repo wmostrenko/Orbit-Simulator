@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import model.Object;
-
 /*
  * Represents the "mathematical backbone" of this application. This is where
  * Object elements and Grid tensors (to be later implemented) are updated,
@@ -35,7 +33,7 @@ public class Simulation {
      * EFFECTS: Adds object it to obejects.
      */
     public void addObject(Object object) {
-        // TODO
+        objects.add(object);
     }
 
     /* 
@@ -44,7 +42,7 @@ public class Simulation {
      * EFFECTS: Removes object from objects.
      */
     public void removeObject(Object object) {
-        // TODO
+        objects.remove(objects.indexOf(object));
     }
 
     /* 
@@ -53,15 +51,75 @@ public class Simulation {
      * gravitational force between all the objects.
      */
     public void standardUpdateObjects() {
-        // TODO
+        for (int i = 0; i < objects.size(); i++) {
+            objects.get(i).updateObject(Simulation.timeStep, netDeltaXAcceleration(objects.get(i), objects), netDeltaYAcceleration(objects.get(i), objects));
+        }
+    }
+
+    /*
+     * REQUIRES: object is in objects.
+     * MODIFIES: object.
+     * EFFECTS: Applies the acceleration changes to an object due to gravity from
+     * all other objects.
+     */
+    public int netDeltaXAcceleration(Object object, ArrayList<Object> objects) {
+        int netDeltaXAcceleration = 0;
+        for (int i = 0; i < (objects.size() - 1); i++) {
+            Object currentObject = objects.get(i);
+            if (object.equals(currentObject)) {
+                continue;
+            } else {
+                int deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
+                int deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
+                int deltaPosition = (int)(Math.hypot(deltaXPosition, deltaYPosition));
+                if (deltaXPosition > 0) {
+                    netDeltaXAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaXPosition);
+                } else if (deltaXPosition < 0) {
+                    netDeltaXAcceleration -= deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaXPosition);
+                } else {
+                    continue;
+                }
+            }
+        }
+        return netDeltaXAcceleration;
+    }
+
+    public int netDeltaYAcceleration(Object object, ArrayList<Object> objects) {
+        int netDeltaYAcceleration = 0;
+        for (int i = 0; i < (objects.size() - 1); i++) {
+            Object currentObject = objects.get(i);
+            if (object.equals(currentObject)) {
+                continue;
+            } else {
+                int deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
+                int deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
+                int deltaPosition = (int)(Math.hypot(deltaXPosition, deltaYPosition));
+                if (deltaYPosition > 0) {
+                    netDeltaYAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaYPosition);
+                } else if (deltaYPosition < 0) {
+                    netDeltaYAcceleration -= deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaYPosition);
+                } else {
+                    continue;
+                }
+            }
+        }
+        return netDeltaYAcceleration;
+    }
+
+    public int deltaAcclerationFrom(int mass, int deltaPosition, int deltaAxisPosition) {
+        return (int)(6.67 * Math.pow(10, -11) * (double)(mass) * (double)(deltaAxisPosition) / Math.pow(deltaPosition, 3));
+    }
+
+    public int deltaPosition(int position1, int position2) {
+        return position2 - position1;
     }
 
     public Object getCurrentReferenceFrame() {
-        // TODO
+        return currentReferenceFrame;
     }
 
     public int getNumberOfObjects() {
-        // TODO
+        return objects.size();
     }
 
 }
