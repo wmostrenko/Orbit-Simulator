@@ -5,13 +5,13 @@ package model;
  * and a mass.
  */
 public class Object {
-    private int mass;
-    private int xPosition;
-    private int yPosition;
-    private int xVelocity;
-    private int yVelocity;
-    private int yAcceleration;
-    private int xAcceleration;
+    private double mass;
+    private double xPosition;
+    private double yPosition;
+    private double xVelocity;
+    private double yVelocity;
+    private double yAcceleration;
+    private double xAcceleration;
 
     /*
      * REQUIRES: mass >= 0.
@@ -19,14 +19,14 @@ public class Object {
      * initializes this.xVelocity to xVelocity, initializes this.yVelocity to yVelocity,
      * initializes this.xAcceleration to 0, initializes this.yAcceleration to 0.
      */
-    public Object(int mass, int xPosition, int yPosition, int xVelocity, int yVelocity) {
+    public Object(double mass, double xPosition, double yPosition, double xVelocity, double yVelocity) {
         this.mass = mass;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.xVelocity = xVelocity;
         this.yVelocity = yVelocity;
-        this.xAcceleration = 0;
-        this.yAcceleration = 0;
+        this.xAcceleration = 0.0;
+        this.yAcceleration = 0.0;
     }
 
     /* 
@@ -34,7 +34,7 @@ public class Object {
      * MODIFIES: object
      * EFFECTS: Updates object's position, velocity, and acceleration.
      */
-    public void updateObject(int timeStep, int deltaXAcceleration, int deltaYAcceleration) {
+    public void updateObject(double timeStep, double deltaXAcceleration, double deltaYAcceleration) {
         updateAcceleration(deltaXAcceleration, deltaYAcceleration);    
         updateVelocity(timeStep);
         updatePosition(timeStep);
@@ -45,7 +45,7 @@ public class Object {
      * MODIFIES: object
      * EFFECTS: Updates object's position.
      */
-    public void updatePosition(int timeStep) {
+    public void updatePosition(double timeStep) {
         this.xPosition += this.xVelocity * timeStep;
         this.yPosition += this.yVelocity * timeStep;
     }
@@ -55,7 +55,7 @@ public class Object {
      * MODIFIES: object
      * EFFECTS: Updates object's velocity.
      */
-    public void updateVelocity(int timeStep) {
+    public void updateVelocity(double timeStep) {
         this.xVelocity += this.xAcceleration * timeStep;
         this.yVelocity += this.yAcceleration * timeStep;
     }
@@ -65,36 +65,36 @@ public class Object {
      * MODIFIES: object
      * EFFECTS: Updates object's acceleration given its change in acceleration.
      */
-    public void updateAcceleration(int deltaXAcceleration, int deltaYAcceleration) {
+    public void updateAcceleration(double deltaXAcceleration, double deltaYAcceleration) {
         this.xAcceleration += deltaXAcceleration;
         this.yAcceleration += deltaYAcceleration;
     }
 
-    public int getMass() {
+    public double getMass() {
         return this.mass;
     }
     
-    public int getXPosition() {
+    public double getXPosition() {
         return this.xPosition;
     }
 
-    public int getYPosition() {
+    public double getYPosition() {
         return this.yPosition;
     }
 
-    public int getXVelocity() {
+    public double getXVelocity() {
         return this.xVelocity;
     }
 
-    public int getYVelocity() {
+    public double getYVelocity() {
         return this.yVelocity;
     }
 
-    public int getXAcceleration() {
+    public double getXAcceleration() {
         return this.xAcceleration;
     }
 
-    public int getYAcceleration() {
+    public double getYAcceleration() {
         return this.yAcceleration;
     }
 }

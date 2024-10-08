@@ -11,9 +11,9 @@ public class Simulation {
     private Object stationaryReferenceFrame;
     private Object currentReferenceFrame;
     private ArrayList<Object> objects;
-    private static int ORIGINX;
-    private static int ORIGINY;
-    private static int timeStep = 1;
+    private static double ORIGINX;
+    private static double ORIGINY;
+    private double timeStep;
 
     /*
      * EFFECTS: initializes stationaryReferenceFrame to a new Object(),
@@ -21,11 +21,12 @@ public class Simulation {
      * initializes objects as a new ArrayList(), adds stationaryReferenceFrame
      * to objects.
     */
-    public Simulation() {
-        stationaryReferenceFrame = new Object(0, ORIGINX, ORIGINY, 0, 0);
+    public Simulation(double timeStep) {
+        stationaryReferenceFrame = new Object(0.0, ORIGINX, ORIGINY, 0.0, 0.0);
         currentReferenceFrame = stationaryReferenceFrame;
         objects = new ArrayList<Object>();
         objects.add(stationaryReferenceFrame);
+        this.timeStep = timeStep;
     }
 
     /* 
@@ -52,7 +53,7 @@ public class Simulation {
      */
     public void standardUpdateObjects() {
         for (int i = 0; i < objects.size(); i++) {
-            objects.get(i).updateObject(Simulation.timeStep, netDeltaXAcceleration(objects.get(i), objects), netDeltaYAcceleration(objects.get(i), objects));
+            objects.get(i).updateObject(this.timeStep, netDeltaXAcceleration(objects.get(i), objects), netDeltaYAcceleration(objects.get(i), objects));
         }
     }
 
@@ -62,57 +63,56 @@ public class Simulation {
      * EFFECTS: Applies the acceleration changes to an object due to gravity from
      * all other objects.
      */
-    public int netDeltaXAcceleration(Object object, ArrayList<Object> objects) {
-        int netDeltaXAcceleration = 0;
-        for (int i = 0; i < objects.size() - 1; i++) {
+    public double netDeltaXAcceleration(Object object, ArrayList<Object> objects) {
+        double netDeltaXAcceleration = 0;
+        for (int i = 0; i < objects.size(); i++) {
             Object currentObject = objects.get(i);
-            int deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
-            int deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
-            int deltaPosition = (int)(Math.hypot(deltaXPosition, deltaYPosition));
-            if (deltaXPosition > 0) {
+            double deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
+            double deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
+            double deltaPosition = Math.hypot(deltaXPosition, deltaYPosition);
+            if (deltaXPosition != 0) {
                 netDeltaXAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaXPosition);
-            } else if (deltaXPosition < 0) {
-                netDeltaXAcceleration -= deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaXPosition);
             } else {
-                i++;
                 continue;
             }
         }
         return netDeltaXAcceleration;
     }
 
-    public int netDeltaYAcceleration(Object object, ArrayList<Object> objects) {
-        int netDeltaYAcceleration = 0;
-        for (int i = 0; i < (objects.size() - 1); i++) {
+    /*
+     * REQUIRES: object is in objects.
+     * MODIFIES: object.
+     * EFFECTS: Applies the acceleration changes to an object due to gravity from
+     * all other objects.
+     */
+    public double netDeltaYAcceleration(Object object, ArrayList<Object> objects) {
+        double netDeltaYAcceleration = 0;
+        for (int i = 0; i < objects.size(); i++) {
             Object currentObject = objects.get(i);
-            if (object.equals(currentObject)) {
-                continue;
+            double deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
+            double deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
+            double deltaPosition = Math.hypot(deltaXPosition, deltaYPosition);
+            if (deltaXPosition != 0) {
+                netDeltaYAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaYPosition);
             } else {
-                int deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
-                int deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
-                int deltaPosition = (int)(Math.hypot(deltaXPosition, deltaYPosition));
-                if (deltaYPosition > 0) {
-                    netDeltaYAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaYPosition);
-                } else if (deltaYPosition < 0) {
-                    netDeltaYAcceleration -= deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaYPosition);
-                } else {
-                    continue;
-                }
+                continue;
             }
         }
         return netDeltaYAcceleration;
     }
-
-    public int deltaAcclerationFrom(int mass, int deltaPosition, int deltaAxisPosition) {
-        return 13 * mass * deltaAxisPosition / (int)(Math.pow(deltaPosition, 3));
+    /*
+     * REQUIRES: mass >= 0, deltaPosition > 0.
+     * EFFECTS: Returns the change in acceleration of an object from another object.
+     */
+    public double deltaAcclerationFrom(double mass, double deltaPosition, double deltaAxisPosition) {
+        return 12.6 * mass * deltaAxisPosition / Math.pow(deltaPosition, 3);
     }
 
-    public int deltaPosition(int position1, int position2) {
+    /*
+     * EFFECTS: Returns distance (magnitude and direction) between two points on an axis.
+     */
+    public double deltaPosition(double position1, double position2) {
         return position2 - position1;
-    }
-
-    public Object getCurrentReferenceFrame() {
-        return currentReferenceFrame;
     }
 
     public int getNumberOfObjects() {
