@@ -8,9 +8,10 @@ import model.Object;
 
 // Represents a tool that users can use to modify Objects in Simulations
 public class ObjectTool {
-    Simulation simulation;
-    Object object;
-    Scanner in = new Scanner(System.in);
+    private Simulation simulation;
+    private Object object;
+    private Scanner in = new Scanner(System.in);
+    private  int userIntInput; // user's last integer input
 
     /*
      * EFFECTS: initializes this.simulation to simulation, initializes object to null.
@@ -73,9 +74,7 @@ public class ObjectTool {
      * MODIFIES: this, simulation.
      * EFFECTS: A UI to remove Objects from a Simulation
      */
-    public void removeObject() {
-        int index; // index of object to be removed
-        
+    public void removeObject() {        
         System.out.println("Which object below would you like to remove (#)? ");
         for (int i = 0; i < simulation.getNumberOfObjects(); i++) {
             System.out.println(i + ". Object " + i);
@@ -83,13 +82,58 @@ public class ObjectTool {
 
         // User entrers object # to remove
         while (true) {
-            index = in.nextInt();
-            if ((index >= simulation.getNumberOfObjects()) || (index < 0)) {
+            userIntInput = in.nextInt();
+            if ((userIntInput >= simulation.getNumberOfObjects()) || (userIntInput < 0)) {
+                System.out.println("That object isn't in your simulation! Try again.");
+            } else {
+                simulation.removeObject(userIntInput);
+                break;
+            }
+        }
+    }
+
+    public void getObjectProperties() {        
+        System.out.println("The properties of which object below would you like to view?");
+        for (int i = 0; i < simulation.getNumberOfObjects(); i++) {
+            System.out.println(i + ". Object " + i);
+        }
+
+        // User entrers object # to observe
+        while (true) {
+            userIntInput = in.nextInt();
+            if ((userIntInput >= simulation.getNumberOfObjects()) || (userIntInput < 0)) {
                 System.out.println("That object isn't in your simulation! Try again.");
             } else {
                 break;
             }
         }
-        simulation.removeObject(index);
+
+        // Prints out properties of chosen object
+        Object observedObject = simulation.getObjects().get(userIntInput);
+        for (int i = 0; i < 7; i++) {
+            switch(i) {
+                case 0:
+                    System.out.println("Mass: " + observedObject.getMass());
+                    break;
+                case 1:
+                    System.out.println("xPosition: " + observedObject.getXPosition());
+                    break;
+                case 2:
+                    System.out.println("yPosition: " + observedObject.getYPosition());
+                    break;
+                case 3:
+                    System.out.println("xVelocity: " + observedObject.getXVelocity());
+                    break;
+                case 4:
+                    System.out.println("yVelocity: " + observedObject.getYVelocity());
+                    break;
+                case 5:
+                    System.out.println("xAcceleration: " + observedObject.getXAcceleration());
+                    break;
+                case 6:
+                    System.out.println("yAcceleration: " + observedObject.getYAcceleration());
+                    break;
+            }
+        }
     }
 }

@@ -70,7 +70,7 @@ public class Simulation {
             double deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
             double deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
             double deltaPosition = Math.hypot(deltaXPosition, deltaYPosition);
-            if (deltaXPosition != 0) {
+            if ((deltaPosition != 0) && (object.getMass() != 0)) {
                 netDeltaXAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaXPosition);
             } else {
                 continue;
@@ -92,7 +92,7 @@ public class Simulation {
             double deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
             double deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
             double deltaPosition = Math.hypot(deltaXPosition, deltaYPosition);
-            if (deltaXPosition != 0) {
+            if ((deltaPosition != 0) && (object.getMass() != 0)) {
                 netDeltaYAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaYPosition);
             } else {
                 continue;
