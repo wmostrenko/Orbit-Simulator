@@ -5,13 +5,13 @@ package model;
  * and a mass.
  */
 public class Object {
-    private double mass;
-    private double xPosition;
-    private double yPosition;
-    private double xVelocity;
-    private double yVelocity;
-    private double yAcceleration;
-    private double xAcceleration;
+    private double mass; // in SM
+    private double xPosition; // in AU
+    private double yPosition; // in AU
+    private double xVelocity; // in AU/yr
+    private double yVelocity; // in AU/yr
+    private double yAcceleration; // in AU/yr^2
+    private double xAcceleration;// in AU/yr^2
 
     /*
      * REQUIRES: mass >= 0.

@@ -13,7 +13,7 @@ public class Simulation {
     private ArrayList<Object> objects;
     private static double ORIGINX;
     private static double ORIGINY;
-    private double timeStep;
+    private double timeStep; // in yr
 
     /*
      * EFFECTS: initializes stationaryReferenceFrame to a new Object(),
@@ -38,12 +38,12 @@ public class Simulation {
     }
 
     /* 
-     * REQUIRES: objects.size() > 0
+     * REQUIRES: index < objects.size()
      * MODIFIES: this.
-     * EFFECTS: Removes object from objects.
+     * EFFECTS: Makes the indexed Object in objects null.
      */
-    public void removeObject(Object object) {
-        objects.remove(objects.indexOf(object));
+    public void removeObject(int index) {
+        objects.remove(index);
     }
 
     /* 
@@ -117,6 +117,10 @@ public class Simulation {
 
     public int getNumberOfObjects() {
         return objects.size();
+    }
+
+    public ArrayList<Object> getObjects() {
+        return this.objects;
     }
 
 }

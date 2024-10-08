@@ -34,7 +34,7 @@ public class SimulationTest {
     @Test
     void removeObjectTest() {
         testSimulation.addObject(testObject1);
-        testSimulation.removeObject(testObject1);
+        testSimulation.removeObject(1);
         assertEquals(1, testSimulation.getNumberOfObjects());
     }
 
