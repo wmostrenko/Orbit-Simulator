@@ -100,17 +100,19 @@ public class SimulationApp {
      */
     public void runSimulation(Simulation simulation) {
         ObjectTool objectTool = new ObjectTool(simulation);
-        while (true) {
+        Boolean simulationRunning = true;
+        while (simulationRunning) {
             System.out.println("What would you like to do in your simulation?");
             System.out.println("1. Add an object.");
             System.out.println("2. Get an object's properties.");
             System.out.println("3. Update the simulation.");
-            System.out.println("4. Close the simulation.");
+            System.out.println("4. Change Reference Frame.");
+            System.out.println("5. Close the simulation.");
 
             // Gets input from user
             while (true) {
                 userIntInput = in.nextInt();
-                if ((userIntInput < 1) || (userIntInput > 4)) {
+                if ((userIntInput < 1) || (userIntInput > 5)) {
                     System.out.println("That is an invalid option! Please try again.");
                 } else {
                     break;
@@ -118,16 +120,46 @@ public class SimulationApp {
             }
 
             // Chooses option based on user's previous input
-            if (userIntInput == 1) {
-                objectTool.addObject();
-            } else if (userIntInput == 2) {
-                objectTool.getObjectProperties();
-            } else if (userIntInput == 3) {
-                simulation.standardUpdateObjects();
+            switch (userIntInput) {
+                case 1:
+                    objectTool.addObject();
+                    break;
+                case 2:
+                    objectTool.getObjectProperties();
+                    break;
+                case 3:
+                    simulation.standardUpdateObjects();
+                    break;
+                case 4:
+                    changeReferenceFrames();
+                    break;
+                case 5:
+                    simulationRunning = false;
+                    break;
+            }
+        }
+    }
+
+    /*
+     * MODIFIES: simulation.
+     * EFFECTS: Changes the current reference frame in the simulation.
+     */
+    public void changeReferenceFrames() {
+        // Prints a list of each Object in objects
+        System.out.println("The reference frame of which object would you like to enter?");
+        for (int i = 0; i < simulation.getNumberOfObjects(); i++) {
+            System.out.println(i + ". Object " + i);
+        }
+
+        // User entrers object # to observe
+        while (true) {
+            userIntInput = in.nextInt();
+            if ((userIntInput >= simulation.getNumberOfObjects()) || (userIntInput < 0)) {
+                System.out.println("That object isn't in your simulation! Try again.");
             } else {
-                System.out.println("Exiting the current simulation and returning to the main menu.");
                 break;
             }
         }
+        simulation.setCurrentReferenceFrame(simulation.getObjectAt(userIntInput));
     }
 }

@@ -130,7 +130,6 @@ public class Simulation {
         currentReferenceFrame = object;
     }
 
-    // subtract currentReferenceFrame
     /*
      * REQUIRES: index >= 0.
      * EFFECTS: Returns the object from objects at the given index.
