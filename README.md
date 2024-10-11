@@ -1,3 +1,11 @@
+# A NOTE TO THE TA GRADING THIS
+
+Hi! I've had some technical difficulties getting my project started as I was unable to log into my UBC GitHub account through VSCode and tried many different things to log in but after a few hours nothing worked. Because I wanted to get my project started, I just started it using my personal github account and so that is where all my commit history is. The repository for my project on my personal account can be found here:
+
+https://github.com/wmostrenko/project-97652119.git
+
+However I am unable to upload this link to PrairieLearn and so I've logged into my UBC GitHub account online and created a new repository (the one you are looking at now) and uploaded all the files from my most recent commit. Therefore all the code on this repository should be working just as intended however this repository won't have any of my commit history. Therefore when grading my commit history, if possible, I would very much so appreciate it if you could view my commit history using the repository from my personal account (linked above). I know there is probably a way to clone my history from my personal repository to my UBC one and I have tried for many hours but nothing has seemed to work. Appologies for the inconvinience!
+
 # A Relativistic Visualization
 
 ## An Introduction
