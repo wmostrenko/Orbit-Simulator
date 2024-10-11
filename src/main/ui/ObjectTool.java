@@ -19,7 +19,8 @@ public class ObjectTool {
     private double yVelocity; // in AU/yr
 
     /*
-     * EFFECTS: Initializes this.simulation to simulation, initializes object to null.
+     * EFFECTS: Initializes this.simulation to simulation, initializes object to
+     * null.
      */
     public ObjectTool(Simulation simulation) {
         this.simulation = simulation;
@@ -73,7 +74,7 @@ public class ObjectTool {
      * MODIFIES: this, simulation.
      * EFFECTS: A UI to remove Objects from a Simulation
      */
-    public void removeObject() {        
+    public void removeObject() {
         System.out.println("Which object below would you like to remove (#)? ");
         for (int i = 0; i < simulation.getNumberOfObjects(); i++) {
             System.out.println(i + ". Object " + i);
@@ -93,9 +94,10 @@ public class ObjectTool {
 
     /*
      * MODIFIES: this.
-     * EFFECTS: Asks user which object they would like to view. Then prints object properties.
+     * EFFECTS: Asks user which object they would like to view. Then prints object
+     * properties.
      */
-    public void getObjectProperties() {      
+    public void getObjectProperties() {
         // Prints a list of each Object in objects
         System.out.println("The properties of which object below would you like to view?");
         for (int i = 0; i < simulation.getNumberOfObjects(); i++) {
@@ -115,7 +117,7 @@ public class ObjectTool {
         // Prints out properties of chosen object
         Object observedObject = simulation.getObjectAt(userIntInput);
         for (int i = 0; i < 7; i++) {
-            switch(i) {
+            switch (i) {
                 case 0:
                     System.out.println("Mass: " + observedObject.getMass());
                     break;

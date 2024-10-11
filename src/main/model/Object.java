@@ -15,8 +15,10 @@ public class Object {
 
     /*
      * REQUIRES: mass >= 0.
-     * EFFECTS: Initializes this.mass to mass, initializes this.xPosition to xPosition,
-     * initializes this.xVelocity to xVelocity, initializes this.yVelocity to yVelocity,
+     * EFFECTS: Initializes this.mass to mass, initializes this.xPosition to
+     * xPosition,
+     * initializes this.xVelocity to xVelocity, initializes this.yVelocity to
+     * yVelocity,
      * initializes this.xAcceleration to 0, initializes this.yAcceleration to 0.
      */
     public Object(double mass, double xPosition, double yPosition, double xVelocity, double yVelocity) {
@@ -29,18 +31,18 @@ public class Object {
         this.yAcceleration = 0.0;
     }
 
-    /* 
+    /*
      * REQUIRES: timeStep >= 0
      * MODIFIES: object
      * EFFECTS: Updates object's position, velocity, and acceleration.
      */
     public void updateObject(double timeStep, double deltaXAcceleration, double deltaYAcceleration) {
-        updateAcceleration(deltaXAcceleration, deltaYAcceleration);    
+        updateAcceleration(deltaXAcceleration, deltaYAcceleration);
         updateVelocity(timeStep);
         updatePosition(timeStep);
     }
 
-    /* 
+    /*
      * REQUIRES: timeStep >= 0
      * MODIFIES: object
      * EFFECTS: Updates object's position.
@@ -50,7 +52,7 @@ public class Object {
         this.yPosition += this.yVelocity * timeStep;
     }
 
-    /* 
+    /*
      * REQUIRES: timeStep >= 0
      * MODIFIES: object
      * EFFECTS: Updates object's velocity.
@@ -60,7 +62,7 @@ public class Object {
         this.yVelocity += this.yAcceleration * timeStep;
     }
 
-    /* 
+    /*
      * REQUIRES: timeStep >= 0
      * MODIFIES: object
      * EFFECTS: Updates object's acceleration given its change in acceleration.
@@ -73,7 +75,7 @@ public class Object {
     public double getMass() {
         return this.mass;
     }
-    
+
     public double getXPosition() {
         return this.xPosition;
     }

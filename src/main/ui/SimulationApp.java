@@ -18,11 +18,13 @@ public class SimulationApp {
 
     /*
      * MODIFIES: this.
-     * EFFECTS: Opens the main menu and asks user which interface they would like to open.
+     * EFFECTS: Opens the main menu and asks user which interface they would like to
+     * open.
      */
     public void runSimulationApp() {
         while (true) {
-            System.out.println("Would you like to make a new simulation (type the number, 1), enter a previous one (type the number, 2), or exit the application (type the number, 3)?");
+            System.out.println(
+                    "Would you like to make a new simulation (type the number, 1), enter a previous one (type the number, 2), or exit the application (type the number, 3)?");
 
             // User selects new or existing simulation
             while (true) {
@@ -39,7 +41,8 @@ public class SimulationApp {
                 addSimulation();
             } else if (userIntInput == 2) {
                 if (simulations.isEmpty()) {
-                    System.out.println("You have yet to make any simulations! Please make a simulation to enter the simulator.");
+                    System.out.println(
+                            "You have yet to make any simulations! Please make a simulation to enter the simulator.");
                 } else {
                     chooseExistingSimulation();
                 }
@@ -71,7 +74,8 @@ public class SimulationApp {
 
     /*
      * MODIFIES: this.
-     * EFFECTS: Asks the user which Simulation they'd like to open, then opens that Simulation.
+     * EFFECTS: Asks the user which Simulation they'd like to open, then opens that
+     * Simulation.
      */
     public void chooseExistingSimulation() {
         System.out.println("Which simulation would you like to enter (#)?");
@@ -110,7 +114,7 @@ public class SimulationApp {
                     System.out.println("That is an invalid option! Please try again.");
                 } else {
                     break;
-                } 
+                }
             }
 
             // Chooses option based on user's previous input

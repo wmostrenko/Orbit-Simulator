@@ -20,7 +20,7 @@ public class Simulation {
      * initializes currentReferenceFrame to point to stationaryReferenceFrame,
      * initializes objects as a new ArrayList(), adds stationaryReferenceFrame
      * to objects.
-    */
+     */
     public Simulation(double timeStep) {
         stationaryReferenceFrame = new Object(0.0, ORIGINX, ORIGINY, 0.0, 0.0);
         currentReferenceFrame = stationaryReferenceFrame;
@@ -29,7 +29,7 @@ public class Simulation {
         this.timeStep = timeStep;
     }
 
-    /* 
+    /*
      * MODIFIES: this.
      * EFFECTS: Adds object it to obejects.
      */
@@ -37,7 +37,7 @@ public class Simulation {
         objects.add(object);
     }
 
-    /* 
+    /*
      * REQUIRES: index < objects.size()
      * MODIFIES: this.
      * EFFECTS: Makes the indexed Object in objects null.
@@ -46,14 +46,15 @@ public class Simulation {
         objects.remove(index);
     }
 
-    /* 
+    /*
      * MODIFIES: this.
      * EFFECTS: Updates the properties of each Obejct in objects with respect to the
      * gravitational force between all the objects.
      */
     public void standardUpdateObjects() {
         for (int i = 0; i < objects.size(); i++) {
-            objects.get(i).updateObject(this.timeStep, netDeltaXAcceleration(objects.get(i), objects), netDeltaYAcceleration(objects.get(i), objects));
+            objects.get(i).updateObject(this.timeStep, netDeltaXAcceleration(objects.get(i), objects),
+                    netDeltaYAcceleration(objects.get(i), objects));
         }
     }
 
@@ -100,6 +101,7 @@ public class Simulation {
         }
         return netDeltaYAcceleration;
     }
+
     /*
      * REQUIRES: mass >= 0, deltaPosition > 0.
      * EFFECTS: Returns the change in acceleration of an object from another object.
@@ -109,7 +111,8 @@ public class Simulation {
     }
 
     /*
-     * EFFECTS: Returns distance (magnitude and direction) between two points on an axis.
+     * EFFECTS: Returns distance (magnitude and direction) between two points on an
+     * axis.
      */
     public double deltaPosition(double position1, double position2) {
         return position2 - position1;
