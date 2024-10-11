@@ -16,7 +16,7 @@ public class Simulation {
     private double timeStep; // in yr
 
     /*
-     * EFFECTS: initializes stationaryReferenceFrame to a new Object(),
+     * EFFECTS: Initializes stationaryReferenceFrame to a new Object(),
      * initializes currentReferenceFrame to point to stationaryReferenceFrame,
      * initializes objects as a new ArrayList(), adds stationaryReferenceFrame
      * to objects.
@@ -115,12 +115,15 @@ public class Simulation {
         return position2 - position1;
     }
 
+    /*
+     * REQUIRES: index >= 0.
+     * EFFECTS: Returns the object from objects at the given index.
+     */
+    public Object getObjectAt(int index) {
+        return this.objects.get(index);
+    }
+
     public int getNumberOfObjects() {
         return objects.size();
     }
-
-    public ArrayList<Object> getObjects() {
-        return this.objects;
-    }
-
 }

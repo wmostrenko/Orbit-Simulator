@@ -15,7 +15,7 @@ public class Object {
 
     /*
      * REQUIRES: mass >= 0.
-     * EFFECTS: initializes this.mass to mass, initializes this.xPosition to xPosition,
+     * EFFECTS: Initializes this.mass to mass, initializes this.xPosition to xPosition,
      * initializes this.xVelocity to xVelocity, initializes this.yVelocity to yVelocity,
      * initializes this.xAcceleration to 0, initializes this.yAcceleration to 0.
      */

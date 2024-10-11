@@ -28,6 +28,12 @@ public class SimulationTest {
     }
 
     @Test
+    void testGetObejctAt() {
+        testSimulation.addObject(testObject1);
+        assertEquals(testObject1, testSimulation.getObjectAt(1));
+    }
+
+    @Test
     void addObjectTest() {
         testSimulation.addObject(testObject1);
         assertEquals(2, testSimulation.getNumberOfObjects());

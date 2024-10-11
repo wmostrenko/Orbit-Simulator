@@ -9,12 +9,17 @@ import model.Object;
 // Represents a tool that users can use to modify Objects in Simulations
 public class ObjectTool {
     private Simulation simulation;
-    private Object object;
+    private Object object; // dummy variable for manipulating objects
     private Scanner in = new Scanner(System.in);
-    private  int userIntInput; // user's last integer input
+    private int userIntInput; // dummy variable for user's last integer input
+    private double mass; // in SM
+    private double xPosition; // in AU
+    private double yPosition; // in AU
+    private double xVelocity; // in AU/yr
+    private double yVelocity; // in AU/yr
 
     /*
-     * EFFECTS: initializes this.simulation to simulation, initializes object to null.
+     * EFFECTS: Initializes this.simulation to simulation, initializes object to null.
      */
     public ObjectTool(Simulation simulation) {
         this.simulation = simulation;
@@ -23,15 +28,9 @@ public class ObjectTool {
 
     /*
      * MODIFIES: this, simulation.
-     * EFFECTS: A UI to add Objects to a Simulation
+     * EFFECTS: A UI to add Objects to a Simulation.
      */
     public void addObject() {
-        double mass; // in SM
-        double xPosition; // in AU
-        double yPosition; // in AU
-        double xVelocity; // in AU/yr
-        double yVelocity; // in AU/yr
-
         // User enters mass
         System.out.println("What is the mass (in solar masses)?");
         while (true) {
@@ -92,7 +91,12 @@ public class ObjectTool {
         }
     }
 
-    public void getObjectProperties() {        
+    /*
+     * MODIFIES: this.
+     * EFFECTS: Asks user which object they would like to view. Then prints object properties.
+     */
+    public void getObjectProperties() {      
+        // Prints a list of each Object in objects
         System.out.println("The properties of which object below would you like to view?");
         for (int i = 0; i < simulation.getNumberOfObjects(); i++) {
             System.out.println(i + ". Object " + i);
@@ -109,7 +113,7 @@ public class ObjectTool {
         }
 
         // Prints out properties of chosen object
-        Object observedObject = simulation.getObjects().get(userIntInput);
+        Object observedObject = simulation.getObjectAt(userIntInput);
         for (int i = 0; i < 7; i++) {
             switch(i) {
                 case 0:

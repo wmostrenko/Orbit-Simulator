@@ -16,6 +16,10 @@ public class SimulationApp {
         runSimulationApp();
     }
 
+    /*
+     * MODIFIES: this.
+     * EFFECTS: Opens the main menu and asks user which interface they would like to open.
+     */
     public void runSimulationApp() {
         while (true) {
             System.out.println("Would you like to make a new simulation (type the number, 1), enter a previous one (type the number, 2), or exit the application (type the number, 3)?");
@@ -45,9 +49,13 @@ public class SimulationApp {
         }
     }
 
+    /*
+     * MODIFIES: this.
+     * EFFECTS: Lets the user create a new simulation with a given timestep.
+     */
     public void addSimulation() {
         simulation = null;
-        System.out.println("What should be the initial timestep of the simulation (in yr). Note that this can always be changed later.");
+        System.out.println("What should be the initial timestep of the simulation (in yr).");
         while (true) {
             initialTimeStep = in.nextDouble();
             if (initialTimeStep < 0) {
@@ -61,6 +69,10 @@ public class SimulationApp {
         }
     }
 
+    /*
+     * MODIFIES: this.
+     * EFFECTS: Asks the user which Simulation they'd like to open, then opens that Simulation.
+     */
     public void chooseExistingSimulation() {
         System.out.println("Which simulation would you like to enter (#)?");
         for (int i = 0; i < simulations.size(); i++) {
@@ -78,6 +90,10 @@ public class SimulationApp {
         }
     }
 
+    /*
+     * MODIFIES: this.
+     * EFFECTS: Runs the Simulation menu.
+     */
     public void runSimulation(Simulation simulation) {
         ObjectTool objectTool = new ObjectTool(simulation);
         while (true) {
