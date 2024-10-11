@@ -9,7 +9,7 @@ As both a computer science and physics student, I have taken many physics classe
 ### Phase 0
 
 - As a user, I would like to create multiple Simulations.
-- As a user, I would like to add multiple Objects to my Simulations and specify their mass and initial velocity.
+- As a user, I would like to add multiple Objects to my Simulations and specify their mass, initial velocity, and position.
 - As a user, I would like to view a list of my Objects in my Simulations.
 - As a user, I would like to enter the Reference Frame of each object from my list of Objects in my Simulation.
 

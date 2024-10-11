@@ -54,7 +54,10 @@ public class Simulation {
     public void standardUpdateObjects() {
         for (int i = 0; i < objects.size(); i++) {
             objects.get(i).updateObject(this.timeStep, netDeltaXAcceleration(objects.get(i), objects),
-                    netDeltaYAcceleration(objects.get(i), objects));
+                    netDeltaYAcceleration(objects.get(i), objects), currentReferenceFrame.getXPosition(),
+                    currentReferenceFrame.getYPosition(), currentReferenceFrame.getXVelocity(),
+                    currentReferenceFrame.getYVelocity(), currentReferenceFrame.getXAcceleration(),
+                    currentReferenceFrame.getYAcceleration());
         }
     }
 
@@ -119,6 +122,16 @@ public class Simulation {
     }
 
     /*
+     * MODIFIES: this.
+     * EFFECTS: Places object at the origin and changes positions, velocities, and
+     * accelerations of all Objects in objects respectivly.
+     */
+    public void setCurrentReferenceFrame(Object object) {
+        currentReferenceFrame = object;
+    }
+
+    // subtract currentReferenceFrame
+    /*
      * REQUIRES: index >= 0.
      * EFFECTS: Returns the object from objects at the given index.
      */
@@ -128,5 +141,13 @@ public class Simulation {
 
     public int getNumberOfObjects() {
         return objects.size();
+    }
+
+    public Object getCurrentReferenceFrame() {
+        return currentReferenceFrame;
+    }
+
+    public Object getStationaryReferenceFrame() {
+        return stationaryReferenceFrame;
     }
 }

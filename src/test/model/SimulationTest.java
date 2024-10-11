@@ -11,6 +11,7 @@ public class SimulationTest {
     private Object testObject2;
     private Object testObject3;
     private Object testObject4;
+    private Object testObject5;
     
     @BeforeEach
     void runBefore() {
@@ -20,6 +21,7 @@ public class SimulationTest {
         testObject2 = new Object(100, 10, 0, 0, 0);
         testObject3 = new Object(100, -10, 0, 0, 0);
         testObject4 = new Object(0, 0, 0, 0, 0);
+        testObject5 = new Object(0, 10, 0, 0, 0);
     }
 
     @Test
@@ -48,7 +50,7 @@ public class SimulationTest {
 
     // Tests standardUpdateObject when deltaXPosition/deltaYPosition >= 0
     @Test
-    void testStandardUpdateObjectsGEQ() {
+    void standardUpdateObjectsGEQTest() {
         testSimulation.addObject(testObject1);
         testSimulation.addObject(testObject2);
         testSimulation.standardUpdateObjects();
@@ -63,7 +65,7 @@ public class SimulationTest {
 
     // Tests standardUpdateObject when deltaXPosition/deltaYPosition <= 0
     @Test
-    void testStandardUpdateObjectsLEQ() {
+    void standardUpdateObjectsLEQTest() {
         testSimulation.addObject(testObject1);
         testSimulation.addObject(testObject3);
         testSimulation.standardUpdateObjects();
@@ -78,7 +80,7 @@ public class SimulationTest {
 
     // Tests standardUpdateObject between an object of non-zero mass, and a massless object
     @Test
-    void testStandardUpdateObjectsOnMassless() {
+    void standardUpdateObjectsOnMasslessTest() {
         testSimulation.addObject(testObject2);
         testSimulation.addObject(testObject4);
         testSimulation.standardUpdateObjects();
@@ -91,5 +93,22 @@ public class SimulationTest {
         assertEquals(0, testObject4.getXPosition());
     }
 
+    // Tests the changing of a reference frame
+    @Test
+    void changeReferenceFramesTest() {
+        testSimulation.addObject(testObject5);
+        testSimulation.setCurrentReferenceFrame(testObject5);
+        assertEquals(testObject5, testSimulation.getCurrentReferenceFrame());
+    }
 
+    // Tests the reference frame updating effects
+    @Test
+    void changeReferenceFramesPositionTest() {
+        testSimulation.addObject(testObject5);
+        testSimulation.setCurrentReferenceFrame(testObject5);
+        testSimulation.standardUpdateObjects();
+
+        assertEquals(0, testObject5.getXPosition());
+        assertEquals(-10, testSimulation.getStationaryReferenceFrame().getXPosition());
+    }
 }

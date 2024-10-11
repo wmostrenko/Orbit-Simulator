@@ -36,10 +36,12 @@ public class Object {
      * MODIFIES: object
      * EFFECTS: Updates object's position, velocity, and acceleration.
      */
-    public void updateObject(double timeStep, double deltaXAcceleration, double deltaYAcceleration) {
-        updateAcceleration(deltaXAcceleration, deltaYAcceleration);
-        updateVelocity(timeStep);
-        updatePosition(timeStep);
+    public void updateObject(double timeStep, double deltaXAcceleration, double deltaYAcceleration,
+            double referenceFrameXPosition, double referenceFrameYPosition, double referenceFrameXVelocity,
+            double referenceFrameYVelocity, double referenceFrameXAcceleration, double referenceFrameYAcceleration) {
+        updateAcceleration(deltaXAcceleration, deltaYAcceleration, referenceFrameXAcceleration, referenceFrameYAcceleration);
+        updateVelocity(timeStep, referenceFrameXVelocity, referenceFrameYVelocity);
+        updatePosition(timeStep, referenceFrameXPosition, referenceFrameYPosition);
     }
 
     /*
@@ -47,9 +49,9 @@ public class Object {
      * MODIFIES: object
      * EFFECTS: Updates object's position.
      */
-    public void updatePosition(double timeStep) {
-        this.xPosition += this.xVelocity * timeStep;
-        this.yPosition += this.yVelocity * timeStep;
+    public void updatePosition(double timeStep, double referenceFrameXPosition, double referenceFrameYPosition) {
+        this.xPosition += this.xVelocity * timeStep - referenceFrameXPosition;
+        this.yPosition += this.yVelocity * timeStep - referenceFrameYPosition;
     }
 
     /*
@@ -57,9 +59,9 @@ public class Object {
      * MODIFIES: object
      * EFFECTS: Updates object's velocity.
      */
-    public void updateVelocity(double timeStep) {
-        this.xVelocity += this.xAcceleration * timeStep;
-        this.yVelocity += this.yAcceleration * timeStep;
+    public void updateVelocity(double timeStep, double referenceFrameXVelocity, double referenceFrameYVelocity) {
+        this.xVelocity += this.xAcceleration * timeStep - referenceFrameXVelocity;
+        this.yVelocity += this.yAcceleration * timeStep - referenceFrameYVelocity;
     }
 
     /*
@@ -67,9 +69,10 @@ public class Object {
      * MODIFIES: object
      * EFFECTS: Updates object's acceleration given its change in acceleration.
      */
-    public void updateAcceleration(double deltaXAcceleration, double deltaYAcceleration) {
-        this.xAcceleration += deltaXAcceleration;
-        this.yAcceleration += deltaYAcceleration;
+    public void updateAcceleration(double deltaXAcceleration, double deltaYAcceleration,
+            double referenceFrameXAcceleration, double referenceFrameYAcceleration) {
+        this.xAcceleration += deltaXAcceleration - referenceFrameXAcceleration;
+        this.yAcceleration += deltaYAcceleration - referenceFrameYAcceleration;
     }
 
     public double getMass() {
