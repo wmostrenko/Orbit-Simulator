@@ -31,6 +31,7 @@ public class ObjectTool {
      * MODIFIES: this, simulation.
      * EFFECTS: A UI to add Objects to a Simulation.
      */
+    @SuppressWarnings("methodlength")
     public void addObject() {
         // User enters mass
         System.out.println("What is the mass (in solar masses)?");
@@ -113,31 +114,35 @@ public class ObjectTool {
                 break;
             }
         }
+        printPropertiesOfChosenObject(simulation.getObjectAt(userIntInput));
+    }
 
-        // Prints out properties of chosen object
-        Object observedObject = simulation.getObjectAt(userIntInput);
+    /*
+     * EFFECTS: Prints properties of given object.
+     */
+    public void printPropertiesOfChosenObject(Object object) {
         for (int i = 0; i < 7; i++) {
             switch (i) {
                 case 0:
-                    System.out.println("Mass: " + observedObject.getMass());
+                    System.out.println("Mass: " + object.getMass());
                     break;
                 case 1:
-                    System.out.println("xPosition: " + observedObject.getXPosition());
+                    System.out.println("xPosition: " + object.getXPosition());
                     break;
                 case 2:
-                    System.out.println("yPosition: " + observedObject.getYPosition());
+                    System.out.println("yPosition: " + object.getYPosition());
                     break;
                 case 3:
-                    System.out.println("xVelocity: " + observedObject.getXVelocity());
+                    System.out.println("xVelocity: " + object.getXVelocity());
                     break;
                 case 4:
-                    System.out.println("yVelocity: " + observedObject.getYVelocity());
+                    System.out.println("yVelocity: " + object.getYVelocity());
                     break;
                 case 5:
-                    System.out.println("xAcceleration: " + observedObject.getXAcceleration());
+                    System.out.println("xAcceleration: " + object.getXAcceleration());
                     break;
                 case 6:
-                    System.out.println("yAcceleration: " + observedObject.getYAcceleration());
+                    System.out.println("yAcceleration: " + object.getYAcceleration());
                     break;
             }
         }

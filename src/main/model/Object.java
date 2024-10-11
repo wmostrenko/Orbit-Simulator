@@ -39,7 +39,8 @@ public class Object {
     public void updateObject(double timeStep, double deltaXAcceleration, double deltaYAcceleration,
             double referenceFrameXPosition, double referenceFrameYPosition, double referenceFrameXVelocity,
             double referenceFrameYVelocity, double referenceFrameXAcceleration, double referenceFrameYAcceleration) {
-        updateAcceleration(deltaXAcceleration, deltaYAcceleration, referenceFrameXAcceleration, referenceFrameYAcceleration);
+        updateAcceleration(deltaXAcceleration, deltaYAcceleration, referenceFrameXAcceleration,
+                referenceFrameYAcceleration);
         updateVelocity(timeStep, referenceFrameXVelocity, referenceFrameYVelocity);
         updatePosition(timeStep, referenceFrameXPosition, referenceFrameYPosition);
     }
