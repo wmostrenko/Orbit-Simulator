@@ -13,7 +13,7 @@ As both a computer science and physics student, I have taken many physics classe
 - As a user, I would like to view a list of my Objects in my Simulations.
 - As a user, I would like to enter the Reference Frame of each object from my list of Objects in my Simulation.
 
-## Class Documentation
+## Class Documentation (OUTDATED)
 
 
 ### Simulation Overview
