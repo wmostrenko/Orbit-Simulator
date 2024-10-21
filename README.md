@@ -21,6 +21,11 @@ As both a computer science and physics student, I have taken many physics classe
 - As a user, I would like to view a list of my Objects in my Simulations.
 - As a user, I would like to enter the Reference Frame of each object from my list of Objects in my Simulation.
 
+### Phase 2
+
+- As a user, I would like to have the option to save the state (Objects and their respective properties) of my Simulations.
+- As a user, I would like to load a previoulsy saved Simulation and continue observing/playing where I previously left off.
+
 ## Class Documentation (OUTDATED)
 
 
