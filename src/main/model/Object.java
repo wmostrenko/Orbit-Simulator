@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 /*
  * Represents a physical object with position (in 2D), velocity (in 2D), acceleration (in 2D),
  * and a mass.
  */
-public class Object {
+public class Object implements Writable{
     private double mass; // in SM
     private double xPosition; // in AU
     private double yPosition; // in AU
@@ -102,5 +106,18 @@ public class Object {
 
     public double getYAcceleration() {
         return this.yAcceleration;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonSimObject = new JSONObject();
+        jsonSimObject.put("mass", mass);
+        jsonSimObject.put("xPosition", xPosition);
+        jsonSimObject.put("yPosition", yPosition);
+        jsonSimObject.put("xVelocity", xVelocity);
+        jsonSimObject.put("yVelocity", yVelocity);
+        jsonSimObject.put("xAcceleration", xAcceleration);
+        jsonSimObject.put("yAcceleration", yAcceleration);
+        return jsonSimObject;
     }
 }

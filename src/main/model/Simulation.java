@@ -1,13 +1,17 @@
 package model;
 
+import persistence.Writable;
 import java.util.ArrayList;
+
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 /*
  * Represents the "mathematical backbone" of this application. This is where
  * Object elements and Grid tensors (to be later implemented) are updated,
  * and where reference frames are managed.
  */
-public class Simulation {
+public class Simulation implements Writable {
     private Object stationaryReferenceFrame;
     private Object currentReferenceFrame;
     private ArrayList<Object> objects;
@@ -148,5 +152,24 @@ public class Simulation {
 
     public Object getStationaryReferenceFrame() {
         return stationaryReferenceFrame;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonSim = new JSONObject();
+        jsonSim.put("timeStep", timeStep);
+        jsonSim.put("objects", objectsToJson());
+        return jsonSim;
+    }
+
+    /*
+     * EFFECTS: returns objects as a JSON array.
+     */
+    private JSONArray objectsToJson() {
+        JSONArray jsonSimObjects = new JSONArray();
+        for (Object object : objects) {
+            jsonSimObjects.put(object.toJson());
+        }
+        return jsonSimObjects;
     }
 }

@@ -22,7 +22,7 @@ public class JsonWriter {
      * EFFECTS: constructs writer to write to destination file.
      */
     public JsonWriter(String destination) {
-        // TODO
+        this.destination = destination;
     }
 
     /*
@@ -31,7 +31,7 @@ public class JsonWriter {
      * cannot be opened for writing.
      */
     public void open() throws FileNotFoundException {
-        // TODO
+        writer = new PrintWriter(new File(destination));
     }
 
     /*
@@ -39,7 +39,8 @@ public class JsonWriter {
      * EFFECTS: writes JSON representaiton of simulation to file.
      */
     public void write(Simulation simulation) {
-        // STUB
+        JSONObject jsonSim = simulation.toJson();
+        saveToFile(jsonSim.toString(TAB));
     }
 
     /*
@@ -47,7 +48,7 @@ public class JsonWriter {
      * EFFECTS: closes the writer.
      */
     public void close() {
-        // STUB
+        writer.close();
     }
 
     /* 
@@ -55,6 +56,6 @@ public class JsonWriter {
      * EFFECTS: writes string to file.
      */
     private void saveToFile(String json) {
-        // STUB
+        writer.print(json);
     }
 }
