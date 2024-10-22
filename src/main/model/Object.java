@@ -10,8 +10,8 @@ public class Object {
     private double yPosition; // in AU
     private double xVelocity; // in AU/yr
     private double yVelocity; // in AU/yr
-    private double yAcceleration; // in AU/yr^2
     private double xAcceleration;// in AU/yr^2
+    private double yAcceleration; // in AU/yr^2
 
     /*
      * REQUIRES: mass >= 0.
