@@ -66,7 +66,7 @@ public class ObjectTool {
         System.out.println("The initial vertical velocity is set to " + yVelocity + "AU/yr");
 
         // Adds object to simulation
-        this.object = new Object(mass, xPosition, yPosition, xVelocity, yVelocity);
+        this.object = new Object(mass, xPosition, yPosition, xVelocity, yVelocity, 0.0, 0.0);
         this.simulation.addObject(this.object);
         System.out.println("Your new object has been added!");
     }

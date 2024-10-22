@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,8 +20,8 @@ public class JsonWriterTest extends JsonTest{
 
     @BeforeEach
     void runBefore() {
-        testObject1 = new Object(1, 0, 0, 0, 0);
-        testObject2 = new Object(100, 10, 1, 2, 3);
+        testObject1 = new Object(1, 0, 0, 0, 0, 0, 0);
+        testObject2 = new Object(100, 10, 1, 2, 3, 0, 0);
     }
 
     @Test

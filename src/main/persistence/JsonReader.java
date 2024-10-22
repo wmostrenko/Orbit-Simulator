@@ -25,7 +25,7 @@ public class JsonReader {
      * EFFECTS: constructs reader to read from source file.
     */
     public JsonReader(String source) {
-        // TODO
+        this.source = source;
     }
 
     /*
@@ -33,21 +33,34 @@ public class JsonReader {
      * throws IOException if an error occurs reading data from file.
     */
     public Simulation read() throws IOException {
-        // TODO
+        String jsonData = readFile(source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parseSimulation(jsonObject);
     }
 
     /*
      * EFFECTS: reads source file as string and returns it.
     */
     private String readFile(String source) throws IOException {
-        // TODO
+        StringBuilder contentBuilder = new StringBuilder();
+
+        try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
+            stream.forEach(s -> contentBuilder.append(s));
+        }
+
+        return contentBuilder.toString();
     }
 
     /*
      * EFFECTS: parses simulation from JSON obejct and returns it.
     */
     private Simulation parseSimulation(JSONObject jsonObject) {
-        // TODO
+        double timeStep = jsonObject.getDouble("timeStep");
+        Simulation simulation = new Simulation(timeStep);
+        
+        addObjects(simulation, jsonObject);
+
+        return simulation;
     }
 
     /*
@@ -55,7 +68,11 @@ public class JsonReader {
      * EFFECTS: parses Objects from jsonObject and adds them to the simulation.
     */
     private void addObjects(Simulation simulation, JSONObject jsonObject) {
-        // TODO
+        JSONArray jsonSimObjects = jsonObject.getJSONArray("objects");
+        for (java.lang.Object jsonSimObject : jsonSimObjects) {
+            JSONObject currentJsonSimObject = (JSONObject) jsonSimObject;
+            addObject(simulation, currentJsonSimObject);
+        }
     }
 
     /*
@@ -63,7 +80,17 @@ public class JsonReader {
      * EFFECTS: parses Object from JSON object and adds it to the simulation with all
      * its properties.
     */
-    private void addObject(Simulation simulation, JSONObject jsonObject) {
-        // TODO
+    private void addObject(Simulation simulation, JSONObject jsonSimObject) {
+        double mass = jsonSimObject.getDouble("mass");
+        double xPosition = jsonSimObject.getDouble("xPosition");
+        double yPosition = jsonSimObject.getDouble("yPosition");
+        double xVelocity = jsonSimObject.getDouble("xVelocity");
+        double yVelocity = jsonSimObject.getDouble("yVelocity");
+        double xAcceleration = jsonSimObject.getDouble("xAcceleration");
+        double yAcceleration = jsonSimObject.getDouble("yAcceleration");
+
+        Object object = new Object(mass, xPosition, yPosition, xVelocity, yVelocity, xAcceleration, yAcceleration);
+
+        simulation.addObject(object);
     }
 }

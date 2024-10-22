@@ -21,14 +21,14 @@ public class Object {
      * yVelocity,
      * initializes this.xAcceleration to 0, initializes this.yAcceleration to 0.
      */
-    public Object(double mass, double xPosition, double yPosition, double xVelocity, double yVelocity) {
+    public Object(double mass, double xPosition, double yPosition, double xVelocity, double yVelocity, double xAcceleration, double yAcceleration) {
         this.mass = mass;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.xVelocity = xVelocity;
         this.yVelocity = yVelocity;
-        this.xAcceleration = 0.0;
-        this.yAcceleration = 0.0;
+        this.xAcceleration = yAcceleration;
+        this.yAcceleration = xAcceleration;
     }
 
     /*

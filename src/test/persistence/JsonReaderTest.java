@@ -1,11 +1,9 @@
 package persistence;
 
-import model.Object;
 import model.Simulation;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,6 +16,7 @@ public class JsonReaderTest extends JsonTest {
     void testReaderNoFile() {
         JsonReader testReader = new JsonReader("./data/notARealFile.json");
         try {
+            Simulation testSimulation = testReader.read();
             fail("IOException expected!");
         } catch (IOException e) {
             // this should run

@@ -22,7 +22,7 @@ public class Simulation {
      * to objects.
      */
     public Simulation(double timeStep) {
-        stationaryReferenceFrame = new Object(0.0, ORIGINX, ORIGINY, 0.0, 0.0);
+        stationaryReferenceFrame = new Object(0.0, ORIGINX, ORIGINY, 0.0, 0.0, 0.0, 0.0);
         currentReferenceFrame = stationaryReferenceFrame;
         objects = new ArrayList<Object>();
         objects.add(stationaryReferenceFrame);

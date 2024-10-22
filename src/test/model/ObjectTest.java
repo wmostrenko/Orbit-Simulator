@@ -11,8 +11,8 @@ public class ObjectTest {
     
     @BeforeEach
     void runBefore() {
-        testObject1 = new Object(1, 2, 3, 4, 5);
-        testObject2 = new Object(0, 10, 15, -5, 2);
+        testObject1 = new Object(1, 2, 3, 4, 5, 0, 0);
+        testObject2 = new Object(0, 10, 15, -5, 2, 0, 0);
     }
 
     @Test
