@@ -42,6 +42,14 @@ public class JsonWriter {
         // STUB
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: closes the writer.
+     */
+    public void close() {
+        // STUB
+    }
+
     /* 
      * MODIFIES: this
      * EFFECTS: writes string to file.

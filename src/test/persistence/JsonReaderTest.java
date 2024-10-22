@@ -14,14 +14,10 @@ import static org.junit.jupiter.api.Assertions.*;
  * https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
  */
 public class JsonReaderTest extends JsonTest {
-    JsonReader testReader;
-    Simulation testSimulation;
-
     @Test
     void testReaderNoFile() {
-        testReader = new JsonReader("./data/notARealFile.json");
+        JsonReader testReader = new JsonReader("./data/notARealFile.json");
         try {
-            testSimulation = testReader.read();
             fail("IOException expected!");
         } catch (IOException e) {
             // this should run
@@ -30,9 +26,9 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderEmptySimulation() {
-        testReader = new JsonReader("./data/testReaderEmptySimulation.json");
+        JsonReader testReader = new JsonReader("./data/testReaderEmptySimulation.json");
         try {
-            testSimulation = testReader.read();
+            Simulation testSimulation = testReader.read();
             assertEquals(2, testSimulation.getNumberOfObjects());
             checkObject(testSimulation.getObjectAt(0), 0, 0, 0, 0, 0, 0, 0);
         } catch (IOException e) {
@@ -42,9 +38,9 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderOneObjectSimulation() {
-        testReader = new JsonReader("./data/testReaderOneObjectSimulation.json");
+        JsonReader testReader = new JsonReader("./data/testReaderOneObjectSimulation.json");
         try {
-            testSimulation = testReader.read();
+            Simulation testSimulation = testReader.read();
             assertEquals(2, testSimulation.getNumberOfObjects());
             checkObject(testSimulation.getObjectAt(0), 0, 0, 0, 0, 0, 0, 0);
             checkObject(testSimulation.getObjectAt(1), 1, 2, 3, 4, 5, 6, 7);
@@ -55,9 +51,9 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderMultipleObjectsSimulation() {
-        testReader = new JsonReader("./data/testReaderMultipleObjectsSimulation.json");
+        JsonReader testReader = new JsonReader("./data/testReaderMultipleObjectsSimulation.json");
         try {
-            testSimulation = testReader.read();
+            Simulation testSimulation = testReader.read();
             assertEquals(2, testSimulation.getNumberOfObjects());
             checkObject(testSimulation.getObjectAt(0), 0, 0, 0, 0, 0, 0, 0);
             checkObject(testSimulation.getObjectAt(1), 1, 2, 3, 4, 5, 6, 7);
