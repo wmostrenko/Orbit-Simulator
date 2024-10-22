@@ -81,7 +81,7 @@ public class ObjectTool {
             System.out.println(i + ". Object " + i);
         }
 
-        // User entrers object # to remove
+        // User enters object # to remove
         while (true) {
             userIntInput = in.nextInt();
             if ((userIntInput >= simulation.getNumberOfObjects()) || (userIntInput < 0)) {
