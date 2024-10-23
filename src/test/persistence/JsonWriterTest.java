@@ -27,7 +27,7 @@ public class JsonWriterTest extends JsonTest{
     @Test
     void testWriterInvalidFile() {
         try {
-            JsonWriter testWriter = new JsonWriter("./data/my\0illegal:fileName.json");
+            JsonWriter testWriter = new JsonWriter("./testData/my\0illegal:fileName.json");
             testWriter.open();
             fail("IOException expected!");
         } catch (IOException e) {
@@ -38,18 +38,19 @@ public class JsonWriterTest extends JsonTest{
     @Test
     void testWriteEmptySimulation() {
         try {
-            Simulation testSimulation = new Simulation(1);
+            Simulation testSimulation = new Simulation("A", 1);
 
-            JsonWriter testWriter = new JsonWriter("./data/testWriteEmptySimulation.json");
+            JsonWriter testWriter = new JsonWriter("./testData/testWriteEmptySimulation.json");
 
             testWriter.open();
             testWriter.write(testSimulation);
             testWriter.close();
 
-            JsonReader testReader = new JsonReader("./data/testWriteEmptySimulation.json");
+            JsonReader testReader = new JsonReader("./testData/testWriteEmptySimulation.json");
             testSimulation = testReader.read();
 
-            assertEquals(2, testSimulation.getNumberOfObjects());
+            assertEquals("A", testSimulation.getName());
+            assertEquals(1, testSimulation.getNumberOfObjects());
             checkObject(testSimulation.getObjectAt(0), 0, 0, 0, 0, 0, 0, 0);
             assertEquals(1, testSimulation.getNumberOfObjects());
             checkObject(testSimulation.getObjectAt(0), 0, 0, 0, 0, 0, 0, 0);
@@ -61,18 +62,19 @@ public class JsonWriterTest extends JsonTest{
     @Test
     void testWriteOneObjectSimulation() {
         try {
-            Simulation testSimulation = new Simulation(1);
+            Simulation testSimulation = new Simulation("A", 1);
             testSimulation.addObject(testObject1);
 
-            JsonWriter testWriter = new JsonWriter("./data/testWriteOneObjectSimulation.json");
+            JsonWriter testWriter = new JsonWriter("./testData/testWriteOneObjectSimulation.json");
 
             testWriter.open();
             testWriter.write(testSimulation);
             testWriter.close();
 
-            JsonReader testReader = new JsonReader("./data/testWriteOneObjectSimulation.json");
+            JsonReader testReader = new JsonReader("./testData/testWriteOneObjectSimulation.json");
             testSimulation = testReader.read();
 
+            assertEquals("A", testSimulation.getName());
             assertEquals(2, testSimulation.getNumberOfObjects());
             checkObject(testSimulation.getObjectAt(0), 0, 0, 0, 0, 0, 0, 0);
             checkObject(testSimulation.getObjectAt(1), 1, 0, 0, 0, 0, 0, 0);
@@ -84,19 +86,20 @@ public class JsonWriterTest extends JsonTest{
     @Test
     void testWriteMultipleObjectsSimulation() {
         try {
-            Simulation testSimulation = new Simulation(1);
+            Simulation testSimulation = new Simulation("A", 1);
             testSimulation.addObject(testObject1);
             testSimulation.addObject(testObject2);
 
-            JsonWriter testWriter = new JsonWriter("./data/testWriteMultipleObjectsSimulation.json");
+            JsonWriter testWriter = new JsonWriter("./testData/testWriteMultipleObjectsSimulation.json");
 
             testWriter.open();
             testWriter.write(testSimulation);
             testWriter.close();
 
-            JsonReader testReader = new JsonReader("./data/testWriteMultipleObjectsSimulation.json");
+            JsonReader testReader = new JsonReader("./testData/testWriteMultipleObjectsSimulation.json");
             testSimulation = testReader.read();
 
+            assertEquals("A", testSimulation.getName());
             assertEquals(3, testSimulation.getNumberOfObjects());
             checkObject(testSimulation.getObjectAt(0), 0, 0, 0, 0, 0, 0, 0);
             checkObject(testSimulation.getObjectAt(1), 1, 0, 0, 0, 0, 0, 0);

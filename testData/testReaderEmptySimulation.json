@@ -1,0 +1,13 @@
+{
+    "timeStep": 0.1,
+    "objects": [{
+        "xPosition": 0,
+        "xVelocity": 0,
+        "yAcceleration": 0,
+        "mass": 0,
+        "yPosition": 0,
+        "yVelocity": 0,
+        "xAcceleration": 0
+    }],
+    "name": "testReaderEmptySimulation"
+}

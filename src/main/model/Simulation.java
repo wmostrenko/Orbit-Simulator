@@ -18,6 +18,7 @@ public class Simulation implements Writable {
     private static double ORIGINX;
     private static double ORIGINY;
     private double timeStep; // in yr
+    private String name;
 
     /*
      * EFFECTS: Initializes stationaryReferenceFrame to a new Object(),
@@ -25,12 +26,13 @@ public class Simulation implements Writable {
      * initializes objects as a new ArrayList(), adds stationaryReferenceFrame
      * to objects.
      */
-    public Simulation(double timeStep) {
+    public Simulation(String name, double timeStep) {
         stationaryReferenceFrame = new Object(0.0, ORIGINX, ORIGINY, 0.0, 0.0, 0.0, 0.0);
         currentReferenceFrame = stationaryReferenceFrame;
         objects = new ArrayList<Object>();
         objects.add(stationaryReferenceFrame);
         this.timeStep = timeStep;
+        this.name = name;
     }
 
     /*
@@ -38,7 +40,9 @@ public class Simulation implements Writable {
      * EFFECTS: Adds object it to obejects.
      */
     public void addObject(Object object) {
-        objects.add(object);
+        if (object.getMass() != 0) {
+            objects.add(object);
+        }
     }
 
     /*
@@ -128,10 +132,12 @@ public class Simulation implements Writable {
     /*
      * MODIFIES: this.
      * EFFECTS: Places object at the origin and changes positions, velocities, and
-     * accelerations of all Objects in objects respectivly.
+     * accelerations of all Objects in objects respectivly. Also updates the simulation
+     * to reflect these changes.
      */
     public void setCurrentReferenceFrame(Object object) {
         currentReferenceFrame = object;
+        standardUpdateObjects();
     }
 
     /*
@@ -140,6 +146,10 @@ public class Simulation implements Writable {
      */
     public Object getObjectAt(int index) {
         return this.objects.get(index);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getNumberOfObjects() {
@@ -158,6 +168,7 @@ public class Simulation implements Writable {
     public JSONObject toJson() {
         JSONObject jsonSim = new JSONObject();
         jsonSim.put("timeStep", timeStep);
+        jsonSim.put("name", name);
         jsonSim.put("objects", objectsToJson());
         return jsonSim;
     }

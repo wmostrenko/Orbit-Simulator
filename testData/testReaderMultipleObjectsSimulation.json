@@ -1,0 +1,33 @@
+{
+    "timeStep": 0.1,
+    "objects": [
+        {
+            "xPosition": 0,
+            "xVelocity": 0,
+            "yAcceleration": 0,
+            "mass": 0,
+            "yPosition": 0,
+            "yVelocity": 0,
+            "xAcceleration": 0
+        },
+        {
+            "xPosition": 2,
+            "xVelocity": 4,
+            "yAcceleration": 0,
+            "mass": 1,
+            "yPosition": 3,
+            "yVelocity": 5,
+            "xAcceleration": 0
+        },
+        {
+            "xPosition": 10,
+            "xVelocity": 0,
+            "yAcceleration": 0,
+            "mass": 100,
+            "yPosition": 0,
+            "yVelocity": 2,
+            "xAcceleration": 0
+        }
+    ],
+    "name": "testReaderMultipleObjectsSimulation"
+}

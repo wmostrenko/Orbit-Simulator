@@ -15,18 +15,19 @@ public class SimulationTest {
     
     @BeforeEach
     void runBefore() {
-        testSimulation = new Simulation(1.0);
+        testSimulation = new Simulation("A", 1.0);
 
         testObject1 = new Object(1, 0, 0, 0, 0, 0, 0);
         testObject2 = new Object(100, 10, 0, 0, 0, 0, 0);
         testObject3 = new Object(100, -10, 0, 0, 0, 0, 0);
         testObject4 = new Object(0, 0, 0, 0, 0, 0, 0);
-        testObject5 = new Object(0, 10, 0, 0, 0, 0, 0);
+        testObject5 = new Object(5, 10, 0, 0, 0, 0, 0);
     }
 
     @Test
     void constructorTest() {
         assertEquals(1, testSimulation.getNumberOfObjects());
+        assertEquals("A", testSimulation.getName());
     }
 
     @Test
@@ -106,7 +107,6 @@ public class SimulationTest {
     void changeReferenceFramesPositionTest() {
         testSimulation.addObject(testObject5);
         testSimulation.setCurrentReferenceFrame(testObject5);
-        testSimulation.standardUpdateObjects();
 
         assertEquals(0, testObject5.getXPosition());
         assertEquals(-10, testSimulation.getStationaryReferenceFrame().getXPosition());

@@ -56,8 +56,9 @@ public class JsonReader {
     */
     private Simulation parseSimulation(JSONObject jsonObject) {
         double timeStep = jsonObject.getDouble("timeStep");
-        Simulation simulation = new Simulation(timeStep);
-        
+        String name = jsonObject.getString("name");
+        Simulation simulation = new Simulation(name, timeStep);
+
         addObjects(simulation, jsonObject);
 
         return simulation;
