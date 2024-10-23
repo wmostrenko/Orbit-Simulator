@@ -85,7 +85,7 @@ public class ObjectTool {
         // Asks user which object they'd like to remove
         System.out.println("Which object below would you like to remove (#)? ");
         for (int i = 0; i < simulation.getNumberOfObjects(); i++) {
-            System.out.println(i + ". Object " + i);
+            System.out.println("(" + i + ")" + ". Object " + i);
         }
 
         // User enters object # to remove
@@ -113,7 +113,7 @@ public class ObjectTool {
         // Prints a list of each Object in objects
         System.out.println("The properties of which object below would you like to view?");
         for (int i = 0; i < simulation.getNumberOfObjects(); i++) {
-            System.out.println(i + ". Object " + i);
+            System.out.println("(" + i + ")" + ". Object " + i);
         }
 
         // User entrers object # to observe
@@ -135,30 +135,12 @@ public class ObjectTool {
      * @param object Object for which properties are printed
      */
     public void printPropertiesOfChosenObject(Object object) {
-        for (int i = 0; i < 7; i++) {
-            switch (i) {
-                case 0:
-                    System.out.println("Mass: " + object.getMass());
-                    break;
-                case 1:
-                    System.out.println("xPosition: " + object.getXPosition());
-                    break;
-                case 2:
-                    System.out.println("yPosition: " + object.getYPosition());
-                    break;
-                case 3:
-                    System.out.println("xVelocity: " + object.getXVelocity());
-                    break;
-                case 4:
-                    System.out.println("yVelocity: " + object.getYVelocity());
-                    break;
-                case 5:
-                    System.out.println("xAcceleration: " + object.getXAcceleration());
-                    break;
-                case 6:
-                    System.out.println("yAcceleration: " + object.getYAcceleration());
-                    break;
-            }
-        }
+        System.out.println("Mass: " + object.getMass());
+        System.out.println("xPosition: " + object.getXPosition());
+        System.out.println("yPosition: " + object.getYPosition());
+        System.out.println("xVelocity: " + object.getXVelocity());
+        System.out.println("yVelocity: " + object.getYVelocity());
+        System.out.println("xAcceleration: " + object.getXAcceleration());
+        System.out.println("yAcceleration: " + object.getYAcceleration());
     }
 }

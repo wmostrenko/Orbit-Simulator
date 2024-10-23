@@ -29,32 +29,31 @@ public class SimulationApp {
      */
     public void runSimulationApp() {
         // Local variable declaration
-        int input;
+        Boolean runningMainMenu = true;
+        char input;
 
         // Main menu loop
-        while (true) {
+        while (runningMainMenu) {
             System.out.println(
-                    "Would you like to make a new simulation (type the number, 1), enter a previous one (type the number, 2), or exit the application (type the number, 3)?");
+                    "Would you like to make a (n)ew simulation, load a (p)revious one, or (e)xit the application?");
 
-            // User selects new or existing simulation
+            // User selects new or existing simulation, or exits application
             while (true) {
-                input = scanner.nextInt();
-                scanner.nextLine();
-                if ((input < 1) || (input > 3)) {
-                    System.out.println("That isn't a valid option! Try again.");
-                } else {
+                input = scanner.nextLine().charAt(0);
+                
+                if (input == 'n') {
+                    addSimulation();
+                    runSimulation(simulation);
                     break;
+                } else if (input == 'p') {
+                    chooseExistingSimulation();
+                    break;
+                } else if (input == 'e') {
+                    runningMainMenu = false;
+                    break;
+                } else {
+                    System.out.println("That isn't a valid option! Try again.");
                 }
-            }
-
-            // Opens new interface depending on user's previous choice
-            if (input == 1) {
-                addSimulation();
-                runSimulation(simulation);
-            } else if (input == 2) {
-                chooseExistingSimulation();
-            } else {
-                break;
             }
         }
     }
@@ -122,18 +121,18 @@ public class SimulationApp {
     public void runSimulation(Simulation simulation) {
         // Local variable declaration
         ObjectTool objectTool = new ObjectTool(simulation);
-        Boolean simulationRunning = true;
+        Boolean runningSimulation = true;
         int input;
 
         // Main simulation menu loop
-        while (simulationRunning) {
+        while (runningSimulation) {
             System.out.println("What would you like to do in your simulation?");
-            System.out.println("1. Add an object.");
-            System.out.println("2. Get an object's properties.");
-            System.out.println("3. Update the simulation.");
-            System.out.println("4. Change Reference Frame.");
-            System.out.println("5. Save the simulation.");
-            System.out.println("6. Close the simulation.");
+            System.out.println("(1). Add an object.");
+            System.out.println("(2). Get an object's properties.");
+            System.out.println("(3). Update the simulation.");
+            System.out.println("(4). Change Reference Frame.");
+            System.out.println("(5). Save the simulation.");
+            System.out.println("(6). Close the simulation.");
 
             // Gets input from user
             while (true) {
@@ -164,7 +163,7 @@ public class SimulationApp {
                     saveSimulation();
                     break;
                 case 6:
-                    simulationRunning = false;
+                    runningSimulation = false;
                     break;
             }
         }
@@ -181,7 +180,7 @@ public class SimulationApp {
         // Prints a list of each Object in objects
         System.out.println("The reference frame of which object would you like to enter?");
         for (int i = 0; i < simulation.getNumberOfObjects(); i++) {
-            System.out.println(i + ". Object " + i);
+            System.out.println("(" + i + ")" + ". Object " + i);
         }
 
         // User entrers object # to observe

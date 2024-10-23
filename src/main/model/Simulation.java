@@ -70,9 +70,9 @@ public class Simulation implements Writable {
      * gravitational force between all the objects.
      */
     public void updateObjects() {
-        for (int i = 0; i < objects.size(); i++) {
-            objects.get(i).updateObject(this.timeStep, netDeltaAcceleration(objects.get(i), 0),
-            netDeltaAcceleration(objects.get(i), 1), currentReferenceFrame.getXPosition(),
+        for (Object currentObject : objects) {
+            currentObject.updateObject(this.timeStep, netDeltaAcceleration(currentObject, 0),
+            netDeltaAcceleration(currentObject, 1), currentReferenceFrame.getXPosition(),
                     currentReferenceFrame.getYPosition(), currentReferenceFrame.getXVelocity(),
                     currentReferenceFrame.getYVelocity(), currentReferenceFrame.getXAcceleration(),
                     currentReferenceFrame.getYAcceleration());
@@ -85,12 +85,12 @@ public class Simulation implements Writable {
      * EFFECTS: Applies the acceleration changes to an object due to gravity from
      * all other objects.
      * 
-     * @param object Object at which change in acceleration due to gravity is calculated with
+     * @param referenceObject Object at which change in acceleration due to gravity is calculated with
      * respect to
      * @param mode mode to tell program which component to calculate delta acceleration for, 0 is x
      * component, 1 is y component
      */
-    public double netDeltaAcceleration(Object object, int mode) {
+    public double netDeltaAcceleration(Object referenceObject, int mode) {
         // Local variable declaration
         double netDeltaAcceleration = 0;
         double deltaXPosition;
@@ -98,12 +98,11 @@ public class Simulation implements Writable {
         double deltaPosition;
 
         // Iterates through each object in Objects and upades object's net acceleration by each Object in objects
-        for (int i = 0; i < objects.size(); i++) {
-            Object currentObject = objects.get(i);
-            deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
-            deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
+        for (Object currentObject : objects) {
+            deltaXPosition = deltaPosition(referenceObject.getXPosition(), currentObject.getXPosition());
+            deltaYPosition = deltaPosition(referenceObject.getYPosition(), currentObject.getYPosition());
             deltaPosition = Math.hypot(deltaXPosition, deltaYPosition);
-            if ((deltaPosition != 0) && (object.getMass() != 0)) {
+            if ((deltaPosition != 0) && (referenceObject.getMass() != 0)) {
                 if (mode == 0) {
                     netDeltaAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaXPosition);
                 } else if (mode == 1) {
@@ -179,8 +178,8 @@ public class Simulation implements Writable {
      */
     private JSONArray objectsToJson() {
         JSONArray jsonSimObjects = new JSONArray();
-        for (Object object : objects) {
-            jsonSimObjects.put(object.toJson());
+        for (Object currentObject : objects) {
+            jsonSimObjects.put(currentObject.toJson());
         }
         return jsonSimObjects;
     }
