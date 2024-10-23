@@ -49,12 +49,12 @@ public class SimulationTest {
         assertEquals(1, testSimulation.getNumberOfObjects());
     }
 
-    // Tests standardUpdateObject when deltaXPosition/deltaYPosition >= 0
+    // Tests updateObjects when deltaXPosition/deltaYPosition >= 0
     @Test
-    void standardUpdateObjectsGEQTest() {
+    void updateObjectsGEQTest() {
         testSimulation.addObject(testObject1);
         testSimulation.addObject(testObject2);
-        testSimulation.standardUpdateObjects();
+        testSimulation.updateObjects();
         assertEquals(12.6, testObject1.getXAcceleration(), 0.01 * 12.6);
         assertEquals(12.6, testObject1.getXVelocity(), 0.01 * 12.6);
         assertEquals(12.6, testObject1.getXPosition(), 0.01 * 12.6);
@@ -64,12 +64,12 @@ public class SimulationTest {
         assertEquals(11.86, testObject2.getXPosition(), 0.01 * 11.86);
     }
 
-    // Tests standardUpdateObject when deltaXPosition/deltaYPosition <= 0
+    // Tests updateObjects when deltaXPosition/deltaYPosition <= 0
     @Test
-    void standardUpdateObjectsLEQTest() {
+    void updateObjectsLEQTest() {
         testSimulation.addObject(testObject1);
         testSimulation.addObject(testObject3);
-        testSimulation.standardUpdateObjects();
+        testSimulation.updateObjects();
         assertEquals(-12.6, testObject1.getXAcceleration(), 0.01 * 12.6);
         assertEquals(-12.6, testObject1.getXVelocity(), 0.01 * 12.6);
         assertEquals(-12.6, testObject1.getXPosition(), 0.01 * 12.6);
@@ -79,12 +79,12 @@ public class SimulationTest {
         assertEquals(-11.86, testObject3.getXPosition(), 0.01 * 11.86);
     }
 
-    // Tests standardUpdateObject between an object of non-zero mass, and a massless object
+    // Tests updateObject between an object of non-zero mass, and a massless object
     @Test
-    void standardUpdateObjectsOnMasslessTest() {
+    void updateObjectsOnMasslessTest() {
         testSimulation.addObject(testObject2);
         testSimulation.addObject(testObject4);
-        testSimulation.standardUpdateObjects();
+        testSimulation.updateObjects();
         assertEquals(0, testObject2.getXAcceleration());
         assertEquals(0, testObject2.getXVelocity());
         assertEquals(10, testObject2.getXPosition());

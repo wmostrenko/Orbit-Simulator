@@ -16,13 +16,15 @@ import java.io.*;
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
-    private String destination;
+    private String source;
 
-    /*
+    /**
      * EFFECTS: constructs writer to write to destination file.
+     * 
+     * @param source directory of file to read
      */
-    public JsonWriter(String destination) {
-        this.destination = destination;
+    public JsonWriter(String source) {
+        this.source = source;
     }
 
     /*
@@ -31,12 +33,14 @@ public class JsonWriter {
      * cannot be opened for writing.
      */
     public void open() throws FileNotFoundException {
-        writer = new PrintWriter(new File(destination));
+        writer = new PrintWriter(new File(source));
     }
 
-    /*
+    /**
      * MODIFIES: this
      * EFFECTS: writes JSON representaiton of simulation to file.
+     * 
+     * @param simulation Simulation used to save state data to file
      */
     public void write(Simulation simulation) {
         JSONObject jsonSim = simulation.toJson();
@@ -51,9 +55,12 @@ public class JsonWriter {
         writer.close();
     }
 
-    /* 
+    /**
      * MODIFIES: this
      * EFFECTS: writes string to file.
+     * 
+     * @param json long string of Simulation state data to convert to
+     * .json file
      */
     private void saveToFile(String json) {
         writer.print(json);

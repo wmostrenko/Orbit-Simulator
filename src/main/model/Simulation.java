@@ -20,11 +20,15 @@ public class Simulation implements Writable {
     private double timeStep; // in yr
     private String name;
 
-    /*
+    /**
      * EFFECTS: Initializes stationaryReferenceFrame to a new Object(),
      * initializes currentReferenceFrame to point to stationaryReferenceFrame,
      * initializes objects as a new ArrayList(), adds stationaryReferenceFrame
      * to objects.
+     * 
+     * @param name name of simulation, mostly used for file naming
+     * @param timeStep time-step in which the simulation updates, used as time-step in Euler's calculations
+     * 
      */
     public Simulation(String name, double timeStep) {
         stationaryReferenceFrame = new Object(0.0, ORIGINX, ORIGINY, 0.0, 0.0, 0.0, 0.0);
@@ -37,9 +41,11 @@ public class Simulation implements Writable {
         this.name = name;
     }
 
-    /*
+    /**
      * MODIFIES: this.
      * EFFECTS: Adds object it to obejects.
+     * 
+     * @param object Object to add to simulation's objects
      */
     public void addObject(Object object) {
         if (object.getMass() != 0) {
@@ -47,109 +53,116 @@ public class Simulation implements Writable {
         }
     }
 
-    /*
+    /**
      * REQUIRES: index < objects.size()
      * MODIFIES: this.
      * EFFECTS: Makes the indexed Object in objects null.
+     * 
+     * @param index index of Object in objects to remove
      */
     public void removeObject(int index) {
         objects.remove(index);
     }
 
-    /*
+    /**
      * MODIFIES: this.
      * EFFECTS: Updates the properties of each Obejct in objects with respect to the
      * gravitational force between all the objects.
      */
-    public void standardUpdateObjects() {
+    public void updateObjects() {
         for (int i = 0; i < objects.size(); i++) {
-            objects.get(i).updateObject(this.timeStep, netDeltaAcceleration(objects.get(i), objects, 0),
-            netDeltaAcceleration(objects.get(i), objects, 1), currentReferenceFrame.getXPosition(),
+            objects.get(i).updateObject(this.timeStep, netDeltaAcceleration(objects.get(i), 0),
+            netDeltaAcceleration(objects.get(i), 1), currentReferenceFrame.getXPosition(),
                     currentReferenceFrame.getYPosition(), currentReferenceFrame.getXVelocity(),
                     currentReferenceFrame.getYVelocity(), currentReferenceFrame.getXAcceleration(),
                     currentReferenceFrame.getYAcceleration());
         }
     }
 
-    /*
-     * REQUIRES: object is in objects.
+    /**
+     * REQUIRES: object is in objects, mode is 0 or 1.
      * MODIFIES: object.
      * EFFECTS: Applies the acceleration changes to an object due to gravity from
      * all other objects.
+     * 
+     * @param object Object at which change in acceleration due to gravity is calculated with
+     * respect to
+     * @param mode mode to tell program which component to calculate delta acceleration for, 0 is x
+     * component, 1 is y component
      */
-    public double netDeltaAcceleration(Object object, ArrayList<Object> objects, int mode) {
+    public double netDeltaAcceleration(Object object, int mode) {
         // Local variable declaration
         double netDeltaAcceleration = 0;
+        double deltaXPosition;
+        double deltaYPosition;
+        double deltaPosition;
 
         // Iterates through each object in Objects and upades object's net acceleration by each Object in objects
         for (int i = 0; i < objects.size(); i++) {
             Object currentObject = objects.get(i);
-            double deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
-            double deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
-            double deltaPosition = Math.hypot(deltaXPosition, deltaYPosition);
+            deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
+            deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
+            deltaPosition = Math.hypot(deltaXPosition, deltaYPosition);
             if ((deltaPosition != 0) && (object.getMass() != 0)) {
                 if (mode == 0) {
                     netDeltaAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaXPosition);
-                } else {
+                } else if (mode == 1) {
                     netDeltaAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaYPosition);
                 }
             } else {
                 continue;
             }
         }
-        
+
         return netDeltaAcceleration;
     }
 
-    /*
+    /**
      * REQUIRES: mass >= 0, deltaPosition > 0.
      * EFFECTS: Returns the change in acceleration of an object from another object.
+     * 
+     * @param mass mass of an Object used to calculate gravitational acceleration from
+     * @param deltaPosition distance between the two Objects used in gravitational acceleration
+     * calculations
+     * @param deltaAxisPosition displacement on specified axis between the two Objects used in
+     * gravitational acceleration calculations
      */
     public double deltaAcclerationFrom(double mass, double deltaPosition, double deltaAxisPosition) {
         return 12.6 * mass * deltaAxisPosition / Math.pow(deltaPosition, 3);
     }
 
-    /*
+    /**
      * EFFECTS: Returns distance (magnitude and direction) between two points on an
      * axis.
+     * 
+     * @param otherPosition single component position of Object being compared against
+     * @param referencePosition single component position of Object being referenced
      */
-    public double deltaPosition(double position1, double position2) {
-        return position2 - position1;
+    public double deltaPosition(double otherPosition, double referencePosition) {
+        return referencePosition - otherPosition;
     }
 
-    /*
+    /**
      * MODIFIES: this.
      * EFFECTS: Places object at the origin and changes positions, velocities, and
      * accelerations of all Objects in objects respectivly. Also updates the simulation
      * to reflect these changes.
+     * 
+     * @param object Object to set at current reference frame
      */
     public void setCurrentReferenceFrame(Object object) {
         currentReferenceFrame = object;
-        standardUpdateObjects();
+        updateObjects();
     }
 
-    /*
+    /**
      * REQUIRES: index >= 0.
      * EFFECTS: Returns the object from objects at the given index.
+     * 
+     * @param index index of Object in objects to return
      */
     public Object getObjectAt(int index) {
         return this.objects.get(index);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getNumberOfObjects() {
-        return objects.size();
-    }
-
-    public Object getCurrentReferenceFrame() {
-        return currentReferenceFrame;
-    }
-
-    public Object getStationaryReferenceFrame() {
-        return stationaryReferenceFrame;
     }
 
     @Override
@@ -170,5 +183,21 @@ public class Simulation implements Writable {
             jsonSimObjects.put(object.toJson());
         }
         return jsonSimObjects;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getNumberOfObjects() {
+        return objects.size();
+    }
+
+    public Object getCurrentReferenceFrame() {
+        return currentReferenceFrame;
+    }
+
+    public Object getStationaryReferenceFrame() {
+        return stationaryReferenceFrame;
     }
 }

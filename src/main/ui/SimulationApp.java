@@ -113,9 +113,11 @@ public class SimulationApp {
         }
     }
 
-    /*
+    /**
      * MODIFIES: this.
      * EFFECTS: Runs the Simulation menu.
+     * 
+     * @param simulation Simulation to run
      */
     public void runSimulation(Simulation simulation) {
         // Local variable declaration
@@ -153,7 +155,7 @@ public class SimulationApp {
                     objectTool.getObjectProperties();
                     break;
                 case 3:
-                    simulation.standardUpdateObjects();
+                    simulation.updateObjects();
                     break;
                 case 4:
                     changeReferenceFrames();
@@ -175,7 +177,7 @@ public class SimulationApp {
     public void changeReferenceFrames() {
         // Local variable declaration
         int input;
-        
+
         // Prints a list of each Object in objects
         System.out.println("The reference frame of which object would you like to enter?");
         for (int i = 0; i < simulation.getNumberOfObjects(); i++) {
@@ -210,10 +212,12 @@ public class SimulationApp {
         }
     }
 
-    /*
+    /**
      * MODIFIES: this
      * REQUIRES: name.json is name of file for simulation
      * EFFECTS: loads simulation from simulation name.
+     * 
+     * @param name name of simulation to load
      */
     private void loadSimulation(String name) throws IOException{
         jsonReader = new JsonReader("./data/" + name + ".json");

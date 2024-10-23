@@ -17,9 +17,11 @@ public class ObjectTool {
     private double xVelocity; // in AU/yr
     private double yVelocity; // in AU/yr
 
-    /*
+    /**
      * EFFECTS: Initializes this.simulation to simulation, initializes object to
      * null.
+     * 
+     * @param simulation Simulation to modify with ObjectTool
      */
     public ObjectTool(Simulation simulation) {
         this.simulation = simulation;
@@ -127,8 +129,10 @@ public class ObjectTool {
         printPropertiesOfChosenObject(simulation.getObjectAt(input));
     }
 
-    /*
+    /**
      * EFFECTS: Prints properties of given object.
+     * 
+     * @param object Object for which properties are printed
      */
     public void printPropertiesOfChosenObject(Object object) {
         for (int i = 0; i < 7; i++) {
