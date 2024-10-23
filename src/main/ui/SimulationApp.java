@@ -10,17 +10,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class SimulationApp {
-    // ArrayList<Simulation> simulations = new ArrayList<Simulation>();
     private Simulation simulation; // dummy Simulation to add Simulation references to simulations
-    private Scanner in;
+    private Scanner scanner;
     private double initialTimeStep; // user's initial timestep for new Simulations
-    private int userIntInput; // user's selected index for choosing options from a list.
-    // private String userStringInput; // user's string inputs.
+    // private int input; // user's selected index for choosing options from a list.
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
     public SimulationApp() {
-        in = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         runSimulationApp();
     }
 
@@ -30,15 +28,19 @@ public class SimulationApp {
      * open.
      */
     public void runSimulationApp() {
+        // Local variable declaration
+        int input;
+
+        // Main menu loop
         while (true) {
             System.out.println(
                     "Would you like to make a new simulation (type the number, 1), enter a previous one (type the number, 2), or exit the application (type the number, 3)?");
 
             // User selects new or existing simulation
             while (true) {
-                userIntInput = in.nextInt();
-                in.nextLine();
-                if ((userIntInput < 1) || (userIntInput > 3)) {
+                input = scanner.nextInt();
+                scanner.nextLine();
+                if ((input < 1) || (input > 3)) {
                     System.out.println("That isn't a valid option! Try again.");
                 } else {
                     break;
@@ -46,10 +48,10 @@ public class SimulationApp {
             }
 
             // Opens new interface depending on user's previous choice
-            if (userIntInput == 1) {
+            if (input == 1) {
                 addSimulation();
                 runSimulation(simulation);
-            } else if (userIntInput == 2) {
+            } else if (input == 2) {
                 chooseExistingSimulation();
             } else {
                 break;
@@ -62,14 +64,21 @@ public class SimulationApp {
      * EFFECTS: Lets the user create a new simulation with a given timestep.
      */
     public void addSimulation() {
-        simulation = null;
-        System.out.println("What should be the name of your simulation?");
-        String userStringInput = in.nextLine();
-        System.out.println("The name is " + userStringInput);
+        // Local variable declaration
+        String name;
 
+        // Resets simulation to null state
+        simulation = null;
+
+        // Asks user for name of simulation, sets name
+        System.out.println("What should be the name of your simulation?");
+        name = scanner.nextLine();
+        System.out.println("The name is " + name);
+
+        // Asks user for timeStep of simulation, sets timeStep
         System.out.println("What should be the initial timestep of the simulation (in yr)?");
         while (true) {
-            initialTimeStep = in.nextDouble();
+            initialTimeStep = scanner.nextDouble();
             if (initialTimeStep < 0) {
                 System.out.println("Your timestep can't be negative! Try again.");
             } else {
@@ -77,20 +86,27 @@ public class SimulationApp {
             }
         }
 
-        simulation = new Simulation((String) userStringInput, initialTimeStep);
-        System.out.println(userStringInput + " has been created with an initial timestep of " + initialTimeStep);
+        // Creates simulation
+        simulation = new Simulation((String) name, initialTimeStep);
+        System.out.println(name + " has been created with an initial timestep of " + initialTimeStep);
     }
 
     /*
      * MODIFIES: this.
      * EFFECTS: Asks the user which Simulation they'd like to open, then opens that
-     * Simulation.
+     * Simulation. Catches IOException from loadSimulation() if name doesn't exist.
      */
     public void chooseExistingSimulation() {
+        // Local variable declaration
+        String name;
+
+        // Asks user what simulation to enter
         System.out.println("Which simulation would you like to enter (type the name of the simulation)?");
-        String userStringInput = in.nextLine();
+        name = scanner.nextLine();
+
+        // Loads and enteres simulation
         try {
-            loadSimulation(userStringInput);
+            loadSimulation(name);
             runSimulation(simulation);
         } catch (IOException e) {
             System.out.println("Simulation with entered name does not exist.");
@@ -102,8 +118,12 @@ public class SimulationApp {
      * EFFECTS: Runs the Simulation menu.
      */
     public void runSimulation(Simulation simulation) {
+        // Local variable declaration
         ObjectTool objectTool = new ObjectTool(simulation);
         Boolean simulationRunning = true;
+        int input;
+
+        // Main simulation menu loop
         while (simulationRunning) {
             System.out.println("What would you like to do in your simulation?");
             System.out.println("1. Add an object.");
@@ -115,9 +135,9 @@ public class SimulationApp {
 
             // Gets input from user
             while (true) {
-                userIntInput = in.nextInt();
-                in.nextLine();
-                if ((userIntInput < 1) || (userIntInput > 6)) {
+                input = scanner.nextInt();
+                scanner.nextLine();
+                if ((input < 1) || (input > 6)) {
                     System.out.println("That is an invalid option! Please try again.");
                 } else {
                     break;
@@ -125,7 +145,7 @@ public class SimulationApp {
             }
 
             // Chooses option based on user's previous input
-            switch (userIntInput) {
+            switch (input) {
                 case 1:
                     objectTool.addObject();
                     break;
@@ -153,6 +173,9 @@ public class SimulationApp {
      * EFFECTS: Changes the current reference frame in the simulation.
      */
     public void changeReferenceFrames() {
+        // Local variable declaration
+        int input;
+        
         // Prints a list of each Object in objects
         System.out.println("The reference frame of which object would you like to enter?");
         for (int i = 0; i < simulation.getNumberOfObjects(); i++) {
@@ -161,15 +184,15 @@ public class SimulationApp {
 
         // User entrers object # to observe
         while (true) {
-            userIntInput = in.nextInt();
-            in.nextLine();
-            if ((userIntInput >= simulation.getNumberOfObjects()) || (userIntInput < 0)) {
+            input = scanner.nextInt();
+            scanner.nextLine();
+            if ((input >= simulation.getNumberOfObjects()) || (input < 0)) {
                 System.out.println("That object isn't in your simulation! Try again.");
             } else {
                 break;
             }
         }
-        simulation.setCurrentReferenceFrame(simulation.getObjectAt(userIntInput));
+        simulation.setCurrentReferenceFrame(simulation.getObjectAt(input));
     }
 
     /*

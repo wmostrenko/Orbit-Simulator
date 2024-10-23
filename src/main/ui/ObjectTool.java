@@ -10,8 +10,7 @@ import model.Object;
 public class ObjectTool {
     private Simulation simulation;
     private Object object; // dummy variable for manipulating objects
-    private Scanner in = new Scanner(System.in);
-    private int userIntInput; // dummy variable for user's last integer input
+    private Scanner scanner;
     private double mass; // in SM
     private double xPosition; // in AU
     private double yPosition; // in AU
@@ -25,6 +24,7 @@ public class ObjectTool {
     public ObjectTool(Simulation simulation) {
         this.simulation = simulation;
         object = null;
+        scanner = new Scanner(System.in);
     }
 
     /*
@@ -36,7 +36,8 @@ public class ObjectTool {
         // User enters mass
         System.out.println("What is the mass (in solar masses)?");
         while (true) {
-            mass = in.nextDouble();
+            mass = scanner.nextDouble();
+            scanner.nextLine();
             if (mass < 0.0) {
                 System.out.println("The mass cannot be negative! Try again.");
             } else {
@@ -47,22 +48,22 @@ public class ObjectTool {
 
         // User enters xPosition
         System.out.println("What should the initial horizontal position be (in astronomical units)?");
-        xPosition = in.nextDouble();
+        xPosition = scanner.nextDouble();
         System.out.println("The horizontal position is set to " + xPosition + "AU");
 
         // User enters yPosition
         System.out.println("What should the initial vertical position be (in astronomical units)?");
-        yPosition = in.nextDouble();
+        yPosition = scanner.nextDouble();
         System.out.println("The vertical position is set to " + yPosition + "AU");
 
         // User enters xVelocity
         System.out.println("What should the initial horizontal velocity be (in astronomical units per year)?");
-        xVelocity = in.nextDouble();
+        xVelocity = scanner.nextDouble();
         System.out.println("The initial horizontal velocity is set to " + xVelocity + "AU/yr");
 
         // User enters yVelocity
         System.out.println("What should the initial vertical velocity be (in astronomical units per year)?");
-        yVelocity = in.nextDouble();
+        yVelocity = scanner.nextDouble();
         System.out.println("The initial vertical velocity is set to " + yVelocity + "AU/yr");
 
         // Adds object to simulation
@@ -76,6 +77,10 @@ public class ObjectTool {
      * EFFECTS: A UI to remove Objects from a Simulation
      */
     public void removeObject() {
+        // Local variable declaration
+        int input;
+
+        // Asks user which object they'd like to remove
         System.out.println("Which object below would you like to remove (#)? ");
         for (int i = 0; i < simulation.getNumberOfObjects(); i++) {
             System.out.println(i + ". Object " + i);
@@ -83,14 +88,15 @@ public class ObjectTool {
 
         // User enters object # to remove
         while (true) {
-            userIntInput = in.nextInt();
-            if ((userIntInput >= simulation.getNumberOfObjects()) || (userIntInput < 0)) {
+            input = scanner.nextInt();
+            if ((input >= simulation.getNumberOfObjects()) || (input < 0)) {
                 System.out.println("That object isn't in your simulation! Try again.");
             } else {
-                simulation.removeObject(userIntInput);
                 break;
             }
         }
+
+        simulation.removeObject(input);
     }
 
     /*
@@ -99,6 +105,9 @@ public class ObjectTool {
      * properties.
      */
     public void getObjectProperties() {
+        // Local variable declaration
+        int input;
+
         // Prints a list of each Object in objects
         System.out.println("The properties of which object below would you like to view?");
         for (int i = 0; i < simulation.getNumberOfObjects(); i++) {
@@ -107,14 +116,15 @@ public class ObjectTool {
 
         // User entrers object # to observe
         while (true) {
-            userIntInput = in.nextInt();
-            if ((userIntInput >= simulation.getNumberOfObjects()) || (userIntInput < 0)) {
+            input = scanner.nextInt();
+            if ((input >= simulation.getNumberOfObjects()) || (input < 0)) {
                 System.out.println("That object isn't in your simulation! Try again.");
             } else {
                 break;
             }
         }
-        printPropertiesOfChosenObject(simulation.getObjectAt(userIntInput));
+
+        printPropertiesOfChosenObject(simulation.getObjectAt(input));
     }
 
     /*
