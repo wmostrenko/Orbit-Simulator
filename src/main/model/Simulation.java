@@ -29,8 +29,10 @@ public class Simulation implements Writable {
     public Simulation(String name, double timeStep) {
         stationaryReferenceFrame = new Object(0.0, ORIGINX, ORIGINY, 0.0, 0.0, 0.0, 0.0);
         currentReferenceFrame = stationaryReferenceFrame;
+
         objects = new ArrayList<Object>();
         objects.add(stationaryReferenceFrame);
+
         this.timeStep = timeStep;
         this.name = name;
     }
@@ -61,8 +63,8 @@ public class Simulation implements Writable {
      */
     public void standardUpdateObjects() {
         for (int i = 0; i < objects.size(); i++) {
-            objects.get(i).updateObject(this.timeStep, netDeltaXAcceleration(objects.get(i), objects),
-                    netDeltaYAcceleration(objects.get(i), objects), currentReferenceFrame.getXPosition(),
+            objects.get(i).updateObject(this.timeStep, netDeltaAcceleration(objects.get(i), objects, 0),
+            netDeltaAcceleration(objects.get(i), objects, 1), currentReferenceFrame.getXPosition(),
                     currentReferenceFrame.getYPosition(), currentReferenceFrame.getXVelocity(),
                     currentReferenceFrame.getYVelocity(), currentReferenceFrame.getXAcceleration(),
                     currentReferenceFrame.getYAcceleration());
@@ -75,42 +77,28 @@ public class Simulation implements Writable {
      * EFFECTS: Applies the acceleration changes to an object due to gravity from
      * all other objects.
      */
-    public double netDeltaXAcceleration(Object object, ArrayList<Object> objects) {
-        double netDeltaXAcceleration = 0;
-        for (int i = 0; i < objects.size(); i++) {
-            Object currentObject = objects.get(i);
-            double deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
-            double deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
-            double deltaPosition = Math.hypot(deltaXPosition, deltaYPosition);
-            if ((deltaPosition != 0) && (object.getMass() != 0)) {
-                netDeltaXAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaXPosition);
-            } else {
-                continue;
-            }
-        }
-        return netDeltaXAcceleration;
-    }
+    public double netDeltaAcceleration(Object object, ArrayList<Object> objects, int mode) {
+        // Local variable declaration
+        double netDeltaAcceleration = 0;
 
-    /*
-     * REQUIRES: object is in objects.
-     * MODIFIES: object.
-     * EFFECTS: Applies the acceleration changes to an object due to gravity from
-     * all other objects.
-     */
-    public double netDeltaYAcceleration(Object object, ArrayList<Object> objects) {
-        double netDeltaYAcceleration = 0;
+        // Iterates through each object in Objects and upades object's net acceleration by each Object in objects
         for (int i = 0; i < objects.size(); i++) {
             Object currentObject = objects.get(i);
             double deltaXPosition = deltaPosition(object.getXPosition(), currentObject.getXPosition());
             double deltaYPosition = deltaPosition(object.getYPosition(), currentObject.getYPosition());
             double deltaPosition = Math.hypot(deltaXPosition, deltaYPosition);
             if ((deltaPosition != 0) && (object.getMass() != 0)) {
-                netDeltaYAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaYPosition);
+                if (mode == 0) {
+                    netDeltaAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaXPosition);
+                } else {
+                    netDeltaAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaYPosition);
+                }
             } else {
                 continue;
             }
         }
-        return netDeltaYAcceleration;
+        
+        return netDeltaAcceleration;
     }
 
     /*
