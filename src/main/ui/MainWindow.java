@@ -1,12 +1,17 @@
 package ui;
 
-import javax.swing.*;
+import model.Simulation;
+
+import persistence.JsonWriter;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import javax.swing.*;
+
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
 public class MainWindow {
     private JFrame frame;
@@ -15,17 +20,26 @@ public class MainWindow {
     private JPanel toolPanel;
     private JPanel commandPanel;
 
+    private Simulation simulation;
+
+    private JsonWriter jsonWriter;
+
     public MainWindow() {
+        simulation = defaultSimulation();
         initializeFrame();
+    }
+
+    public Simulation defaultSimulation() {
+        return new Simulation("untitled", 0.1);
     }
 
     private void initializeFrame() {
         frame = new JFrame();
-        this.frame.setTitle("Simulation"); // TODO: Make simulation name
+        this.frame.setTitle(simulation.getName());
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.frame.setSize(900,600);
         this.frame.setLocationRelativeTo(null);
-        this.frame.setResizable(false); // TODO: Add functionality to resize eventually
+        this.frame.setResizable(false); // TODO: Add functionality to resize
         initializePanels();
         this.frame.setVisible(true);
     }
@@ -38,7 +52,8 @@ public class MainWindow {
     private void initializeWidgetPanel() {
         widgetPanel = new JPanel();
         widgetPanel.setLayout(new GridLayout(2, 1));
-        widgetPanel.setBackground(Color.GREEN);
+        widgetPanel.setBackground(Color.WHITE);
+        widgetPanel.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, Color.BLACK));
         initializeToolPanel();
         initializeCommandPanel();
         frame.add(widgetPanel, BorderLayout.EAST);
@@ -47,22 +62,17 @@ public class MainWindow {
     private void initializeToolPanel() {
         toolPanel = new JPanel();
         toolPanel.setLayout(new GridLayout(0, 1));
-        toolPanel.setBackground(Color.ORANGE);
+        toolPanel.setBackground(Color.WHITE);
         createToolButtons();
         widgetPanel.add(toolPanel, BorderLayout.NORTH);
     }
 
     private void createToolButtons() {
-        JButton addObjectButton = createAddObjectButton();
-        toolPanel.add(addObjectButton);
-        JButton getPropertiesButton = createGetPropertiesButton();
-        toolPanel.add(getPropertiesButton);
-        JButton changeReferenceFrameButton = createChangeReferenceFrameButton();
-        toolPanel.add(changeReferenceFrameButton);
-        JButton changeTimestepButton = createChangeTimestepButton();
-        toolPanel.add(changeTimestepButton);
-        JButton changeNameButton = createChangeNameButton();
-        toolPanel.add(changeNameButton);
+        toolPanel.add(createAddObjectButton());
+        toolPanel.add(createGetPropertiesButton());
+        toolPanel.add(createChangeReferenceFrameButton());
+        toolPanel.add(createChangeTimeStepButton());
+        toolPanel.add(createChangeNameButton());
     }
 
     private JButton createAddObjectButton() {
@@ -71,7 +81,7 @@ public class MainWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Add Object Placeholder"); // TODO: Open new window
+                new AddObjectWindow(simulation);
             }
         });
         return button;
@@ -83,7 +93,7 @@ public class MainWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Get Properties Placeholder"); // TODO: Open new window
+                System.out.println("Get Properties Placeholder"); // TODO: Get Properties
             }
         });
         return button;
@@ -95,19 +105,19 @@ public class MainWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Change Reference Frame Placeholder"); // TODO: Open new window
+                System.out.println("Change Reference Frame Placeholder"); // TODO: Change Reference Frame
             }
         });
         return button;
     }
 
-    private JButton createChangeTimestepButton() {
-        JButton button = new JButton("Change Timestep");
+    private JButton createChangeTimeStepButton() {
+        JButton button = new JButton("Change Time Step");
         button.setFocusable(false);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Change Timestep"); // TODO: Open new window
+                new ChangeTimeStepWindow(simulation);
             }
         });
         return button;
@@ -119,7 +129,7 @@ public class MainWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Change Name"); // TODO: Open new window
+                new ChangeNameWindow(simulation);
             }
         });
         return button;
@@ -128,18 +138,16 @@ public class MainWindow {
     private void initializeCommandPanel() {
         commandPanel = new JPanel();
         commandPanel.setLayout(new GridLayout(0, 1));
-        commandPanel.setBackground(Color.RED);
+        commandPanel.setBackground(Color.WHITE);
+        commandPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));
         createCommandButtons();
         widgetPanel.add(commandPanel, BorderLayout.SOUTH);
     }
     
     private void createCommandButtons() {
-        JButton saveSimulationButton = createSaveSimulationButton();
-        commandPanel.add(saveSimulationButton);
-        JButton loadSimulationButton = createLoadSimulationButton();
-        commandPanel.add(loadSimulationButton);
-        JButton newSimulationButton = createNewSimulationButton();
-        commandPanel.add(newSimulationButton);
+        commandPanel.add(createSaveSimulationButton());
+        commandPanel.add(createLoadSimulationButton());
+        commandPanel.add(createNewSimulationButton());
     }
 
     private JButton createSaveSimulationButton() {
@@ -148,7 +156,7 @@ public class MainWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Save Simulation Placeholder"); // TODO: Saves simulation
+                saveSimulation();
             }
         });
         return button;
@@ -160,7 +168,7 @@ public class MainWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Load Simulation Placeholder"); // TODO: Opens new window
+                System.out.println("Load Simulation Placeholder"); // TODO: Load Simulatioin
             }
         });
         return button;
@@ -172,7 +180,7 @@ public class MainWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("New Simulation Placeholder"); // TODO: Makes new simulation
+                System.out.println("New Simulation Placeholder"); // TODO: New Simulation
             }
         });
         return button;
@@ -180,7 +188,22 @@ public class MainWindow {
 
     private void initializeSimulationPanel() {
         simulationPanel = new JPanel();
-        simulationPanel.setBackground(Color.BLUE);
+        simulationPanel.setBackground(Color.WHITE);
         frame.add(simulationPanel);
+    }
+
+    /*
+     * EFFECTS: saves current simulation to a file.
+     */
+    private void saveSimulation() {
+        try {
+            jsonWriter = new JsonWriter("./data/" + simulation.getName() + ".json");
+            jsonWriter.open();
+            jsonWriter.write(simulation);
+            jsonWriter.close();
+            System.out.println("Simulation saved!");
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write file \"" + simulation.getName() + "\".");
+        }
     }
 }

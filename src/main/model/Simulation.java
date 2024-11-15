@@ -26,8 +26,9 @@ public class Simulation implements Writable {
      * initializes objects as a new ArrayList(), adds stationaryReferenceFrame
      * to objects.
      * 
-     * @param name name of simulation, mostly used for file naming
-     * @param timeStep time-step in which the simulation updates, used as time-step in Euler's calculations
+     * @param name     name of simulation, mostly used for file naming
+     * @param timeStep time-step in which the simulation updates, used as time-step
+     *                 in Euler's calculations
      * 
      */
     public Simulation(String name, double timeStep) {
@@ -72,7 +73,7 @@ public class Simulation implements Writable {
     public void updateObjects() {
         for (Object currentObject : objects) {
             currentObject.updateObject(this.timeStep, netDeltaAcceleration(currentObject, 0),
-            netDeltaAcceleration(currentObject, 1), currentReferenceFrame.getXPosition(),
+                    netDeltaAcceleration(currentObject, 1), currentReferenceFrame.getXPosition(),
                     currentReferenceFrame.getYPosition(), currentReferenceFrame.getXVelocity(),
                     currentReferenceFrame.getYVelocity(), currentReferenceFrame.getXAcceleration(),
                     currentReferenceFrame.getYAcceleration());
@@ -85,10 +86,12 @@ public class Simulation implements Writable {
      * EFFECTS: Applies the acceleration changes to an object due to gravity from
      * all other objects.
      * 
-     * @param referenceObject Object at which change in acceleration due to gravity is calculated with
-     * respect to
-     * @param mode mode to tell program which component to calculate delta acceleration for, 0 is x
-     * component, 1 is y component
+     * @param referenceObject Object at which change in acceleration due to gravity
+     *                        is calculated with
+     *                        respect to
+     * @param mode            mode to tell program which component to calculate
+     *                        delta acceleration for, 0 is x
+     *                        component, 1 is y component
      */
     public double netDeltaAcceleration(Object referenceObject, int mode) {
         // Local variable declaration
@@ -97,16 +100,19 @@ public class Simulation implements Writable {
         double deltaYPosition;
         double deltaPosition;
 
-        // Iterates through each object in Objects and upades object's net acceleration by each Object in objects
+        // Iterates through each object in Objects and upades object's net acceleration
+        // by each Object in objects
         for (Object currentObject : objects) {
             deltaXPosition = deltaPosition(referenceObject.getXPosition(), currentObject.getXPosition());
             deltaYPosition = deltaPosition(referenceObject.getYPosition(), currentObject.getYPosition());
             deltaPosition = Math.hypot(deltaXPosition, deltaYPosition);
             if ((deltaPosition != 0) && (referenceObject.getMass() != 0)) {
                 if (mode == 0) {
-                    netDeltaAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaXPosition);
+                    netDeltaAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition,
+                            deltaXPosition);
                 } else if (mode == 1) {
-                    netDeltaAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition, deltaYPosition);
+                    netDeltaAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition,
+                            deltaYPosition);
                 }
             } else {
                 continue;
@@ -120,11 +126,14 @@ public class Simulation implements Writable {
      * REQUIRES: mass >= 0, deltaPosition > 0.
      * EFFECTS: Returns the change in acceleration of an object from another object.
      * 
-     * @param mass mass of an Object used to calculate gravitational acceleration from
-     * @param deltaPosition distance between the two Objects used in gravitational acceleration
-     * calculations
-     * @param deltaAxisPosition displacement on specified axis between the two Objects used in
-     * gravitational acceleration calculations
+     * @param mass              mass of an Object used to calculate gravitational
+     *                          acceleration from
+     * @param deltaPosition     distance between the two Objects used in
+     *                          gravitational acceleration
+     *                          calculations
+     * @param deltaAxisPosition displacement on specified axis between the two
+     *                          Objects used in
+     *                          gravitational acceleration calculations
      */
     public double deltaAcclerationFrom(double mass, double deltaPosition, double deltaAxisPosition) {
         return 12.6 * mass * deltaAxisPosition / Math.pow(deltaPosition, 3);
@@ -134,7 +143,8 @@ public class Simulation implements Writable {
      * EFFECTS: Returns distance (magnitude and direction) between two points on an
      * axis.
      * 
-     * @param otherPosition single component position of Object being compared against
+     * @param otherPosition     single component position of Object being compared
+     *                          against
      * @param referencePosition single component position of Object being referenced
      */
     public double deltaPosition(double otherPosition, double referencePosition) {
@@ -144,7 +154,8 @@ public class Simulation implements Writable {
     /**
      * MODIFIES: this.
      * EFFECTS: Places object at the origin and changes positions, velocities, and
-     * accelerations of all Objects in objects respectivly. Also updates the simulation
+     * accelerations of all Objects in objects respectivly. Also updates the
+     * simulation
      * to reflect these changes.
      * 
      * @param object Object to set at current reference frame
@@ -184,6 +195,24 @@ public class Simulation implements Writable {
         return jsonSimObjects;
     }
 
+    /**
+     * EFFECTS: changes simulation name.
+     * 
+     * @param name new name for simulation
+     */
+    public void changeName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * EFFECTS: changes timeStep.
+     * 
+     * @param timeStep new time step for simulation
+     */
+    public void changeTimeStep(double timeStep) {
+        this.timeStep = timeStep;
+    }
+
     public String getName() {
         return name;
     }
@@ -198,5 +227,9 @@ public class Simulation implements Writable {
 
     public Object getStationaryReferenceFrame() {
         return stationaryReferenceFrame;
+    }
+
+    public Double getTimeStep() {
+        return timeStep;
     }
 }
