@@ -12,7 +12,7 @@ public class ChangeNameWindow {
     private JFrame frame;
     private JPanel mainPanel;
     private Simulation simulation;
-    private String name;
+    JTextField textField;
 
     private static int WHITESPACE = 7;
 
@@ -55,21 +55,10 @@ public class ChangeNameWindow {
         JLabel label = new JLabel("Name: ");
         panel.add(label);
 
-        JTextField textField = createTextField();
+        textField = new JTextField(simulation.getName());
         panel.add(textField);
         
         return panel;
-    }
-
-    private JTextField createTextField() {
-        JTextField textField = new JTextField(simulation.getName());
-        textField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                name = textField.getText();
-            }
-        });
-        return textField;
     }
 
     private void initializeChangeNameButton() {
@@ -83,7 +72,7 @@ public class ChangeNameWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                simulation.changeName(name);
+                simulation.changeName(textField.getText());
             }
         });
         return button;

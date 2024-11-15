@@ -69,6 +69,7 @@ public class MainWindow {
 
     private void createToolButtons() {
         toolPanel.add(createAddObjectButton());
+        toolPanel.add(createRemoveObjectButton());
         toolPanel.add(createGetPropertiesButton());
         toolPanel.add(createChangeReferenceFrameButton());
         toolPanel.add(createChangeTimeStepButton());
@@ -82,6 +83,18 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new AddObjectWindow(simulation);
+            }
+        });
+        return button;
+    }
+
+    private JButton createRemoveObjectButton() {
+        JButton button = new JButton("Remove Object");
+        button.setFocusable(false);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO: Remove object
             }
         });
         return button;

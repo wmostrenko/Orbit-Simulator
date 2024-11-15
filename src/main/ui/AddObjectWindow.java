@@ -15,24 +15,22 @@ public class AddObjectWindow {
     private JPanel mainPanel;
     private Simulation simulation;
 
-    private ArrayList<Double> values;
     private ArrayList<String> labels;
+    private ArrayList<JTextField> textFields;
+    private JTextField massTextField;
+    private JTextField xPositionTextField;
+    private JTextField yPositionTextField;
+    private JTextField xVelocityTextField;
+    private JTextField yVelocityTextField;
 
     private static int WHITESPACE = 7;
 
     public AddObjectWindow(Simulation simulation) {
         this.simulation = simulation;
-        initializeValues();
+        initializeTextFields();
         initializeLabels();
         initializeFrame();
     }
-
-    private void initializeValues() {
-        values = new ArrayList<Double>();
-        for (int i = 0; i < 5; i++) {
-            values.add(0.0);
-        }
-    };
 
     private void initializeLabels() {
         labels = new ArrayList<String>();
@@ -41,6 +39,21 @@ public class AddObjectWindow {
         labels.add("Y Position (AU): ");
         labels.add("X Velocity (AU/yr): ");
         labels.add("Y Velocity (AU/yr): ");
+    }
+
+    private void initializeTextFields() {
+        textFields = new ArrayList<JTextField>();
+        
+        massTextField = new JTextField("0.0");
+        textFields.add(massTextField);
+        xPositionTextField = new JTextField("0.0");
+        textFields.add(xPositionTextField);
+        yPositionTextField = new JTextField("0.0");
+        textFields.add(yPositionTextField);
+        xVelocityTextField = new JTextField("0.0");
+        textFields.add(xVelocityTextField);
+        yVelocityTextField = new JTextField("0.0");
+        textFields.add(yVelocityTextField);
     }
 
     private void initializeFrame() {
@@ -81,22 +94,21 @@ public class AddObjectWindow {
         JLabel label = new JLabel(labels.get(index));
         panel.add(label);
 
-        JTextField textField = createTextField(index);
-        panel.add(textField);
+        panel.add(textFields.get(index));
         
         return panel;
     }
 
-    private JTextField createTextField(Integer index) {
-        JTextField textField = new JTextField(Double.toString(values.get(index)));
-        textField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                values.set(index, Double.parseDouble(textField.getText()));
-            }
-        });
-        return textField;
-    }
+    // private JTextField createTextField(Integer index) {
+    //     JTextField textField = new JTextField(Double.toString(values.get(index)));
+    //     textField.addActionListener(new ActionListener() {
+    //         @Override
+    //         public void actionPerformed(ActionEvent e) {
+    //             values.set(index, Double.parseDouble(textField.getText()));
+    //         }
+    //     });
+    //     return textField;
+    // }
 
     private void initializeAddObjectButton() {
         JButton addObjectButton = createAddObjectButton();
@@ -109,7 +121,11 @@ public class AddObjectWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                simulation.addObject(new Object(values.get(0), values.get(1), values.get(2), values.get(3), values.get(4), 0, 0));
+                simulation.addObject(new Object(Double.parseDouble(textFields.get(0).getText()),
+                                                Double.parseDouble(textFields.get(1).getText()),
+                                                Double.parseDouble(textFields.get(2).getText()),
+                                                Double.parseDouble(textFields.get(3).getText()),
+                                                Double.parseDouble(textFields.get(4).getText()),0, 0));
             }
         });
         return button;

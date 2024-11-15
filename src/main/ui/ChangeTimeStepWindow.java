@@ -12,7 +12,7 @@ public class ChangeTimeStepWindow {
     private JFrame frame;
     private JPanel mainPanel;
     private Simulation simulation;
-    private double timeStep;
+    JTextField textField;
 
     private static int WHITESPACE = 7;
 
@@ -55,21 +55,10 @@ public class ChangeTimeStepWindow {
         JLabel label = new JLabel("Timestep: ");
         panel.add(label);
 
-        JTextField textField = createTextField();
+        textField = new JTextField(Double.toString(simulation.getTimeStep()));
         panel.add(textField);
         
         return panel;
-    }
-
-    private JTextField createTextField() {
-        JTextField textField = new JTextField(Double.toString(simulation.getTimeStep()));
-        textField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                timeStep = Double.parseDouble(textField.getText());
-            }
-        });
-        return textField;
     }
 
     private void initializeChangeTimeStepButton() {
@@ -83,7 +72,7 @@ public class ChangeTimeStepWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                simulation.changeTimeStep(timeStep);
+                simulation.changeTimeStep(Double.parseDouble(textField.getText()));
             }
         });
         return button;
