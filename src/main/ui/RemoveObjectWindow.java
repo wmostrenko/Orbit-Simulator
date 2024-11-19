@@ -1,8 +1,6 @@
 package ui;
 
 import model.Simulation;
-import model.Object;
-import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;

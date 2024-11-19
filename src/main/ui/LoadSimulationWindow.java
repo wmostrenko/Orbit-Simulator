@@ -15,7 +15,6 @@ public class LoadSimulationWindow {
     private JFrame frame;
     private JPanel mainPanel;
     private Simulation simulation;
-    private Simulation newSimulation;
     private JTextField textField;
 
     private static int WHITESPACE = 7;
@@ -78,8 +77,7 @@ public class LoadSimulationWindow {
             public void actionPerformed(ActionEvent e) {
                 JsonReader jsonReader = new JsonReader("./data/" + textField.getText() + ".json");
                 try {
-                    newSimulation = jsonReader.read();
-                    new MainWindow(newSimulation);
+                    new MainWindow(jsonReader.read());
                 } catch (IOException e1) {
                     System.out.println("That name doesn't exist!");
                 }

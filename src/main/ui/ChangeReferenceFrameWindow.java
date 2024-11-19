@@ -22,7 +22,7 @@ public class ChangeReferenceFrameWindow {
 
     public void initializeFrame() {
         frame = new JFrame();
-        this.frame.setTitle("Get Object Properties");
+        this.frame.setTitle("Change Reference Frame");
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.frame.setSize(300, 200);
         this.frame.setLocationRelativeTo(null);

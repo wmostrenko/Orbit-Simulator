@@ -189,7 +189,7 @@ public class MainWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("New Simulation Placeholder"); // TODO: New Simulation
+                new NewSimulationWindow();
             }
         });
         return button;
