@@ -13,7 +13,6 @@ public class SimulationApp {
     private Simulation simulation; // dummy Simulation to add Simulation references to simulations
     private Scanner scanner;
     private double initialTimeStep; // user's initial timestep for new Simulations
-    // private int input; // user's selected index for choosing options from a list.
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
@@ -218,7 +217,7 @@ public class SimulationApp {
      * 
      * @param name name of simulation to load
      */
-    private void loadSimulation(String name) throws IOException{
+    private void loadSimulation(String name) throws IOException {
         jsonReader = new JsonReader("./data/" + name + ".json");
         simulation = jsonReader.read();
     }

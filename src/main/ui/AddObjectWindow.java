@@ -99,17 +99,6 @@ public class AddObjectWindow {
         return panel;
     }
 
-    // private JTextField createTextField(Integer index) {
-    //     JTextField textField = new JTextField(Double.toString(values.get(index)));
-    //     textField.addActionListener(new ActionListener() {
-    //         @Override
-    //         public void actionPerformed(ActionEvent e) {
-    //             values.set(index, Double.parseDouble(textField.getText()));
-    //         }
-    //     });
-    //     return textField;
-    // }
-
     private void initializeAddObjectButton() {
         JButton addObjectButton = createAddObjectButton();
         mainPanel.add(addObjectButton);

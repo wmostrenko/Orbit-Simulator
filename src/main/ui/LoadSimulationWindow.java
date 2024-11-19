@@ -1,29 +1,33 @@
 package ui;
 
 import model.Simulation;
+import persistence.JsonReader;
+
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
-public class ChangeNameWindow {
+public class LoadSimulationWindow {
     private JFrame frame;
     private JPanel mainPanel;
     private Simulation simulation;
+    private Simulation newSimulation;
     private JTextField textField;
 
     private static int WHITESPACE = 7;
 
-    public ChangeNameWindow(Simulation simulation) {
+    public LoadSimulationWindow(Simulation simulation) {
         this.simulation = simulation;
         initializeFrame();
     }
 
     public void initializeFrame() {
         frame = new JFrame();
-        this.frame.setTitle("Change Name");
+        this.frame.setTitle("Load Simulation");
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.frame.setSize(300, 100);
         this.frame.setLocationRelativeTo(null);
@@ -37,7 +41,7 @@ public class ChangeNameWindow {
         mainPanel.setLayout(new GridLayout(0, 1, 10, 0));
         mainPanel.setBackground(Color.WHITE);
         initializeFieldPanels();
-        initializeChangeNameButton();
+        initializeSimulationNameButton();
         mainPanel.setBorder(BorderFactory.createMatteBorder(WHITESPACE, WHITESPACE, WHITESPACE, WHITESPACE, Color.WHITE));
 
         frame.add(mainPanel);
@@ -52,7 +56,7 @@ public class ChangeNameWindow {
         panel.setLayout(new GridLayout(1, 2));
         panel.setBackground(Color.WHITE);
 
-        JLabel label = new JLabel("Name: ");
+        JLabel label = new JLabel("Simulation Name: ");
         panel.add(label);
 
         textField = new JTextField(simulation.getName());
@@ -61,18 +65,24 @@ public class ChangeNameWindow {
         return panel;
     }
 
-    private void initializeChangeNameButton() {
-        JButton changeNameButton = createChangeNameButton();
-        mainPanel.add(changeNameButton);
+    private void initializeSimulationNameButton() {
+        JButton simulationNameButton = createSimulationNameButton();
+        mainPanel.add(simulationNameButton);
     }
 
-    private JButton createChangeNameButton() {
-        JButton button = new JButton("Change Name");
+    private JButton createSimulationNameButton() {
+        JButton button = new JButton("Load Simulation");
         button.setFocusable(false);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                simulation.changeName(textField.getText());
+                JsonReader jsonReader = new JsonReader("./data/" + textField.getText() + ".json");
+                try {
+                    newSimulation = jsonReader.read();
+                    new MainWindow(newSimulation);
+                } catch (IOException e1) {
+                    System.out.println("That name doesn't exist!");
+                }
             }
         });
         return button;

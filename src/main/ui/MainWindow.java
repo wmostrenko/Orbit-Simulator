@@ -24,13 +24,9 @@ public class MainWindow {
 
     private JsonWriter jsonWriter;
 
-    public MainWindow() {
-        simulation = defaultSimulation();
+    public MainWindow(Simulation simulation) {
+        this.simulation = simulation;
         initializeFrame();
-    }
-
-    public Simulation defaultSimulation() {
-        return new Simulation("untitled", 0.1);
     }
 
     private void initializeFrame() {
@@ -39,7 +35,7 @@ public class MainWindow {
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.frame.setSize(900,600);
         this.frame.setLocationRelativeTo(null);
-        this.frame.setResizable(false); // TODO: Add functionality to resize
+        this.frame.setResizable(false);
         initializePanels();
         this.frame.setVisible(true);
     }
@@ -94,7 +90,7 @@ public class MainWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: Remove object
+                new RemoveObjectWindow(simulation);
             }
         });
         return button;
@@ -106,7 +102,7 @@ public class MainWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Get Properties Placeholder"); // TODO: Get Properties
+                new GetPropertiesWindow(simulation);
             }
         });
         return button;
@@ -118,7 +114,7 @@ public class MainWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Change Reference Frame Placeholder"); // TODO: Change Reference Frame
+                new ChangeReferenceFrameWindow(simulation);
             }
         });
         return button;
@@ -181,7 +177,7 @@ public class MainWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Load Simulation Placeholder"); // TODO: Load Simulatioin
+                new LoadSimulationWindow(simulation);
             }
         });
         return button;
