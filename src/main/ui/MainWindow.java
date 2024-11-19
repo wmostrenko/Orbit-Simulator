@@ -1,7 +1,6 @@
 package ui;
 
 import model.Simulation;
-
 import persistence.JsonWriter;
 
 import java.awt.BorderLayout;
@@ -14,8 +13,9 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
 public class MainWindow {
+    private static final int INTERVAL = 10;
     private JFrame frame;
-    private JPanel simulationPanel;
+    private SimulationPanel simulationPanel;
     private JPanel widgetPanel;
     private JPanel toolPanel;
     private JPanel commandPanel;
@@ -31,18 +31,20 @@ public class MainWindow {
 
     private void initializeFrame() {
         frame = new JFrame();
-        this.frame.setTitle(simulation.getName());
-        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.frame.setSize(900,600);
-        this.frame.setLocationRelativeTo(null);
-        this.frame.setResizable(false);
+        frame.setTitle(simulation.getName());
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(900,600);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
         initializePanels();
-        this.frame.setVisible(true);
+        frame.setVisible(true);
+        addTimer();
     }
 
     private void initializePanels() {
         initializeWidgetPanel();
-        initializeSimulationPanel();
+        simulationPanel = new SimulationPanel(simulation);
+        frame.add(simulationPanel);
     }
 
     private void initializeWidgetPanel() {
@@ -66,6 +68,7 @@ public class MainWindow {
     private void createToolButtons() {
         toolPanel.add(createAddObjectButton());
         toolPanel.add(createRemoveObjectButton());
+        toolPanel.add(createAddRandomObjectsButton());
         toolPanel.add(createGetPropertiesButton());
         toolPanel.add(createChangeReferenceFrameButton());
         toolPanel.add(createChangeTimeStepButton());
@@ -91,6 +94,18 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new RemoveObjectWindow(simulation);
+            }
+        });
+        return button;
+    }
+
+    private JButton createAddRandomObjectsButton() {
+        JButton button = new JButton("Add Random Objects");
+        button.setFocusable(false);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AddRandomObjectsWindow(simulation);
             }
         });
         return button;
@@ -195,15 +210,6 @@ public class MainWindow {
         return button;
     }
 
-    private void initializeSimulationPanel() {
-        simulationPanel = new JPanel();
-        simulationPanel.setBackground(Color.WHITE);
-        frame.add(simulationPanel);
-    }
-
-    /*
-     * EFFECTS: saves current simulation to a file.
-     */
     private void saveSimulation() {
         try {
             jsonWriter = new JsonWriter("./data/" + simulation.getName() + ".json");
@@ -215,4 +221,15 @@ public class MainWindow {
             System.out.println("Unable to write file \"" + simulation.getName() + "\".");
         }
     }
+
+    private void addTimer() {
+		Timer t = new Timer(INTERVAL, new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				simulation.updateObjects();
+                simulationPanel.repaint();
+			}
+		});
+		t.start();
+	}
 }
