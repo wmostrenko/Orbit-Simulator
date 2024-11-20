@@ -13,7 +13,7 @@ import model.Object;
  */
 public class SimulationPanel extends JPanel {
     private Simulation simulation;
-    public static Double SCALE = 10.0;
+    public static Double SCALE = 100.0;
 
     /**
      * EFFECTS: Constructs a panel for which objects in the
