@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
 public class MainWindow {
-    private static final int INTERVAL = 10;
+    private static final int INTERVAL = 1;
     private JFrame frame;
     private SimulationPanel simulationPanel;
     private JPanel widgetPanel;

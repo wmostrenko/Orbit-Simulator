@@ -16,7 +16,7 @@ public class AddRandomObjectsWindow {
     private JPanel mainPanel;
     private Simulation simulation;
     private JTextField textField;
-    private static int MAX_MASS = 1;
+    private static int MAX_MASS = 100;
     private static int MAX_X_POSITION = 700;
     private static int MAX_Y_POSITION = 700;
     private static int MAX_X_VELOCITY = 20;
