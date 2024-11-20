@@ -37,7 +37,7 @@ public class LoadSimulationWindow extends TextAndButtonWindow {
     @Override
     protected void initializeTextFields() {
         textFields = new ArrayList<JTextField>();
-        textFields.add(new JTextField(simulation.getName()));
+        textFields.add(new JTextField());
     }
 
     /*
