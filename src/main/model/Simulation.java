@@ -72,12 +72,19 @@ public class Simulation implements Writable {
      */
     public void updateObjects() {
         for (Object currentObject : objects) {
-            currentObject.updateObject(this.timeStep, netDeltaAcceleration(currentObject, 0),
-                    netDeltaAcceleration(currentObject, 1), currentReferenceFrame.getXPosition(),
-                    currentReferenceFrame.getYPosition(), currentReferenceFrame.getXVelocity(),
-                    currentReferenceFrame.getYVelocity(), currentReferenceFrame.getXAcceleration(),
-                    currentReferenceFrame.getYAcceleration());
+            if (!currentObject.equals(currentReferenceFrame)) {
+                currentObject.updateObject(timeStep, netDeltaAcceleration(currentObject, 0),
+                                           netDeltaAcceleration(currentObject, 1), currentReferenceFrame.getXPosition(),
+                                           currentReferenceFrame.getYPosition(), currentReferenceFrame.getXVelocity(),
+                                           currentReferenceFrame.getYVelocity(), currentReferenceFrame.getXAcceleration(),
+                                           currentReferenceFrame.getYAcceleration());
+            }
         }
+        currentReferenceFrame.updateObject(timeStep, netDeltaAcceleration(currentReferenceFrame, 0),
+                                           netDeltaAcceleration(currentReferenceFrame, 1), currentReferenceFrame.getXPosition(),
+                                           currentReferenceFrame.getYPosition(), currentReferenceFrame.getXVelocity(),
+                                           currentReferenceFrame.getYVelocity(), currentReferenceFrame.getXAcceleration(),
+                                           currentReferenceFrame.getYAcceleration());
     }
 
     /**
@@ -114,8 +121,6 @@ public class Simulation implements Writable {
                     netDeltaAcceleration += deltaAcclerationFrom(currentObject.getMass(), deltaPosition,
                             deltaYPosition);
                 }
-            } else {
-                continue;
             }
         }
 
