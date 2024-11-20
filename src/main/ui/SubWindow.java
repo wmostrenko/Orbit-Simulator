@@ -27,6 +27,13 @@ public abstract class SubWindow {
         initializeFrame();
     }
 
+    public SubWindow(String title, Integer width, Integer height) {
+        this.title = title;
+        this.width = width;
+        this.height = height;
+        initializeFrame();
+    }
+
     public void initializeFrame() {
         frame = new JFrame();
         this.frame.setTitle(title);

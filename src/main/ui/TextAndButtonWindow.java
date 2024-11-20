@@ -25,6 +25,10 @@ public abstract class TextAndButtonWindow extends SubWindow {
         super(title, width, height, simulation);
     }
 
+    public TextAndButtonWindow(String title, Integer width, Integer height) {
+        super(title, width, height);
+    }
+
     @Override
     public void initializeElements() {
         initializeLabels();
