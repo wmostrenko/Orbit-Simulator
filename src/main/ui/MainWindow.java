@@ -192,7 +192,7 @@ public class MainWindow {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new LoadSimulationWindow(simulation);
+                new LoadSimulationWindow();
             }
         });
         return button;

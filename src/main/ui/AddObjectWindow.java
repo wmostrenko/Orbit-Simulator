@@ -5,11 +5,23 @@ import model.Object;
 import java.util.ArrayList;
 import javax.swing.*;
 
+/*
+ * Represents a window for which users can add objects to their simulation.
+ */
 public class AddObjectWindow extends TextAndButtonWindow {
+    /**
+     * EFFECTS: Constructs an window for which users can add objects.
+     * 
+     * @param simulation Simulation for which users will add objects.
+     */
     public AddObjectWindow(Simulation simulation) {
         super("Add Object", 300, 200, simulation);
     }
 
+    /*
+     * MODIFIES: super
+     * EFFECTS: Adds specified labels to labels.
+     */
     @Override
     protected void initializeLabels() {
         labels = new ArrayList<JLabel>();
@@ -20,6 +32,10 @@ public class AddObjectWindow extends TextAndButtonWindow {
         labels.add(new JLabel("Y Velocity (AU/yr): "));
     }
 
+    /*
+     * MODIFIES: super
+     * EFFECTS: Adds specified textFields to labels.
+     */
     @Override
     protected void initializeTextFields() {
         textFields = new ArrayList<JTextField>();
@@ -30,6 +46,10 @@ public class AddObjectWindow extends TextAndButtonWindow {
         textFields.add(new JTextField("0.0"));
     }
 
+    /*
+     * MODIFIES: super
+     * EFFECTS: Adds object to simulation accortding to responses in textFields.
+     */
     @Override
     protected void buttonAction() {
         simulation.addObject(new Object(Double.parseDouble(textFields.get(0).getText()),
