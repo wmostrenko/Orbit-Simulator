@@ -111,4 +111,18 @@ public class SimulationTest {
         assertEquals(0, testObject5.getXPosition());
         assertEquals(-10, testSimulation.getStationaryReferenceFrame().getXPosition());
     }
+
+    // Tests the changing of simulation name
+    @Test
+    void changeNameTest() {
+        testSimulation.changeName("B");
+        assertEquals("B", testSimulation.getName());
+    }
+
+    // Tests the changing of simulation time step
+    @Test
+    void changeTimeStepTest() {
+        testSimulation.changeTimeStep(10);
+        assertEquals(10, testSimulation.getTimeStep());
+    }
 }
