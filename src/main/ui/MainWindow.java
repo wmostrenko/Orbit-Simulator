@@ -263,8 +263,8 @@ public class MainWindow {
 
     /*
      * MODIFIES: this.
-     * EFFECTS: Saves simulation to a file with the name,
-     * "./data/<simulationName>.json".
+     * EFFECTS: Saves simulation to a file with the name, 
+     * <simulationName>.json.
      */
     private void saveSimulation() {
         try {

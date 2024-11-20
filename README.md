@@ -26,8 +26,15 @@ As both a computer science and physics student, I have taken many physics classe
 - As a user, I would like to have the option to save the state (Objects and their respective properties) of my Simulations.
 - As a user, I would like to load a previoulsy saved Simulation and continue observing/playing where I previously left off.
 
-## Class Documentation (OUTDATED)
+## Instructions for End User
 
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by selecting the "Add Random Objects" button in the main window. This open a window where you can specify the number of objects to generate, then generate them by pressing the "Add Random Objects Button".
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by selecting the "Change Reference Frames" button in the main window. This will open a window with a list of buttons that correspond to each object in your simulation. When you click on one of these buttons, you will enter the reference frame of that object (the stationary reference frame is included in this!).
+- You can locate my visual component by observing the simulation panel on the left-hand side of the main window (note that you can only see objects if you add them to the simulation!).
+- You can save the state of my application by selecting the "Save Simulation" button in the command bar in the main window. Pressing this will save your simulation to a file with the name of your simulation.
+- You can reload the state of my application by selecting the "Load Simulation" button in the command bar of the main window. Doing so will open a new window where you can type the name of your previous simulation. Once you do so, clicking the "Load Simulation" button will open a new main window linked to the simulation whose name you typed!
+
+## Class Documentation (OUTDATED)
 
 ### Simulation Overview
 Each `Simulation` is the mathematical backbone of the application. It will manage updating its `Object` elements (position, velocity, acceleration), updating the `Grid` tensor, and switching/maintaining the current reference frame. To do so, each Simulation will have the following elements:
