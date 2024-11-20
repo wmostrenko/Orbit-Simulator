@@ -8,21 +8,19 @@ import javax.swing.*;
 
 import java.util.ArrayList;
 
-public class PropertiesWindow {
-    private JFrame frame;
-    private JPanel mainPanel;
-    private Object object;
-
+public class PropertiesWindow extends SubWindow {
     private ArrayList<JLabel> staticLabels;
     private ArrayList<JLabel> propertyLabels;
 
-    private static int WHITESPACE = 7;
-
     public PropertiesWindow(Object object) {
-        this.object = object;
+        super("Properties", 300, 200, object);
+    }
+
+    @Override
+    protected void initializeElements() {
         initializeStaticLabels();
         initializePropertyLabels();
-        initializeFrame();
+        initializePanels();
     }
 
     private void initializeStaticLabels() {
@@ -47,43 +45,18 @@ public class PropertiesWindow {
         propertyLabels.add(new JLabel(Double.toString(object.getYAcceleration())));
     }
 
-    private void initializeFrame() {
-        frame = new JFrame();
-        this.frame.setTitle("Add Object");
-        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.frame.setSize(300, 200);
-        this.frame.setLocationRelativeTo(null);
-        this.frame.setResizable(false);
-        initializeMainPanel();
-        this.frame.setVisible(true);
+    private void initializePanels() {
+        for (int i = 0; i < 7; i++) {
+            mainPanel.add(createPanel(i));
+        }
     }
 
-    private void initializeMainPanel() {
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(0, 1, 10, 0));
-        mainPanel.setBackground(Color.WHITE);
-        initializePropertyPanels();
-        mainPanel.setBorder(BorderFactory.createMatteBorder(WHITESPACE, WHITESPACE, WHITESPACE, WHITESPACE, Color.WHITE));
-
-        frame.add(mainPanel);
-    }
-
-    private void initializePropertyPanels() {
-        mainPanel.add(createPanel(0));
-        mainPanel.add(createPanel(1));
-        mainPanel.add(createPanel(2));
-        mainPanel.add(createPanel(3));
-        mainPanel.add(createPanel(4));
-        mainPanel.add(createPanel(5));
-        mainPanel.add(createPanel(6));
-    }
-
-    private JPanel createPanel(Integer index) {
+    private JPanel createPanel(Integer i) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1, 2));
         panel.setBackground(Color.WHITE);
-        panel.add(staticLabels.get(index));
-        panel.add(propertyLabels.get(index));
+        panel.add(staticLabels.get(i));
+        panel.add(propertyLabels.get(i));
         return panel;
     }
 }

@@ -67,8 +67,8 @@ public class MainWindow {
 
     private void createToolButtons() {
         toolPanel.add(createAddObjectButton());
-        toolPanel.add(createRemoveObjectButton());
         toolPanel.add(createAddRandomObjectsButton());
+        toolPanel.add(createRemoveObjectButton());
         toolPanel.add(createGetPropertiesButton());
         toolPanel.add(createChangeReferenceFrameButton());
         toolPanel.add(createChangeTimeStepButton());
@@ -87,18 +87,6 @@ public class MainWindow {
         return button;
     }
 
-    private JButton createRemoveObjectButton() {
-        JButton button = new JButton("Remove Object");
-        button.setFocusable(false);
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new RemoveObjectWindow(simulation);
-            }
-        });
-        return button;
-    }
-
     private JButton createAddRandomObjectsButton() {
         JButton button = new JButton("Add Random Objects");
         button.setFocusable(false);
@@ -106,6 +94,18 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new AddRandomObjectsWindow(simulation);
+            }
+        });
+        return button;
+    }
+
+    private JButton createRemoveObjectButton() {
+        JButton button = new JButton("Remove Object");
+        button.setFocusable(false);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new RemoveObjectWindow(simulation);
             }
         });
         return button;

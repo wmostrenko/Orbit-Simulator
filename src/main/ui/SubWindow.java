@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import model.Simulation;
+import model.Object;
 
 public abstract class SubWindow {
     private static int WHITESPACE = 7;
@@ -18,6 +19,7 @@ public abstract class SubWindow {
     private Integer width;
     private Integer height;
     protected Simulation simulation;
+    protected Object object;
 
     public SubWindow(String title, Integer width, Integer height, Simulation simulation) {
         this.title = title;
@@ -31,6 +33,14 @@ public abstract class SubWindow {
         this.title = title;
         this.width = width;
         this.height = height;
+        initializeFrame();
+    }
+
+    public SubWindow(String title, Integer width, Integer height, Object object) {
+        this.title = title;
+        this.width = width;
+        this.height = height;
+        this.object = object;
         initializeFrame();
     }
 

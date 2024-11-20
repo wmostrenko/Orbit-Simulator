@@ -17,10 +17,6 @@ public abstract class TextAndButtonWindow extends SubWindow {
     protected ArrayList<JLabel> labels;
     protected ArrayList<JTextField> textFields;
 
-    protected abstract void initializeLabels();
-
-    protected abstract void initializeTextFields();
-
     public TextAndButtonWindow(String title, Integer width, Integer height, Simulation simulation) {
         super(title, width, height, simulation);
     }
@@ -36,6 +32,10 @@ public abstract class TextAndButtonWindow extends SubWindow {
         initializeFieldPanels();
         initializeButton();
     }
+
+    protected abstract void initializeLabels();
+
+    protected abstract void initializeTextFields();
 
     private void initializeFieldPanels() {
         for (int i = 0; i < labels.size(); i++) {
