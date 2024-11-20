@@ -16,7 +16,6 @@ import model.Simulation;
 public abstract class TextAndButtonWindow extends SubWindow {
     protected ArrayList<JLabel> labels;
     protected ArrayList<JTextField> textFields;
-    private String buttonName;
 
     protected abstract void initializeLabels();
 
