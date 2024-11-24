@@ -9,8 +9,7 @@ import org.json.JSONArray;
 
 /*
  * Represents the "mathematical backbone" of this application. This is where
- * Object elements and Grid tensors (to be later implemented) are updated,
- * and where reference frames are managed.
+ * Object elements are updated, and where reference frames are managed.
  */
 public class Simulation implements Writable {
     private Object stationaryReferenceFrame;

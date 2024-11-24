@@ -105,3 +105,10 @@ Sun Nov 24 13:29:14 PST 2024
 Changed simulation name.
 Sun Nov 24 13:29:17 PST 2024
 Saved simulation.
+
+**A NOTE TO THE TA**
+Hello! As you may have noticed, my Event and EventLog classes aren't in my model package! This was intentional as since my model package has a class named Object (in hind-sight, this was a pretty bad move on my part). So if Event/EventLog were in model, their references the standard java class "Object" would try and reference my model class "Object" and things would break. Not sure how else I could fix this so I just decided I had to put the Event/EventLog classes in a separate package.
+
+## Phase 4: Task 3
+
+Looking at my UML Design Diagram, I feel I have developed a pretty clean program. Initially, all my UI SubWindows were just individual classes and I didn't have the SubWindow, TextAndButtonWindow, and ButtonWindow classes which would have made this diagram a disaster so I'm very glad I was able to refactor my code before the end of Phase 3. In terms of future refactoring that I would do if I had more time, I would likely use a better computational physics method than Euler's method as once around 200 objects are added to the simulation, it gets very very slow. But if I were to refactor my Simulation and Object classes using different methods (likely using matricies and computaitonal physics optimization techniques), I would be able to add far more obejcts to my simulations before the program slows down, and I would also likely be able to draw future object trajectories.
