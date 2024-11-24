@@ -88,3 +88,20 @@ An `Object` is simply and object in a `Simulation` (i.e. think of an `Object` in
 5. `xAcceleration` which is a number representing the x acceleration of the object. This is initialized as 0.
 6. `yAcceleration` which is a number representing the y acceleration of the object. This is initialized as 0.
 7. `mass` which is a number representing the mass of the object.
+
+## Phase 4: Task 2
+
+Sun Nov 24 13:28:45 PST 2024
+Added new object to simulation.
+Sun Nov 24 13:28:50 PST 2024
+Removed object from simulation.
+Sun Nov 24 13:29:01 PST 2024
+Added new object to simulation.
+Sun Nov 24 13:29:03 PST 2024
+Changed reference frame.
+Sun Nov 24 13:29:10 PST 2024
+Changed simulation time step.
+Sun Nov 24 13:29:14 PST 2024
+Changed simulation name.
+Sun Nov 24 13:29:17 PST 2024
+Saved simulation.

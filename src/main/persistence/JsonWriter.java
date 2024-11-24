@@ -2,6 +2,8 @@ package persistence;
 import model.Simulation;
 import org.json.JSONObject;
 
+import logs.Event;
+import logs.EventLog;
 
 import java.io.*;
 
@@ -45,6 +47,7 @@ public class JsonWriter {
     public void write(Simulation simulation) {
         JSONObject jsonSim = simulation.toJson();
         saveToFile(jsonSim.toString(TAB));
+        EventLog.getInstance().logEvent(new Event("Saved simulation."));
     }
 
     /*

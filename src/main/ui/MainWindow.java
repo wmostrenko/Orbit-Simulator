@@ -2,6 +2,7 @@ package ui;
 
 import model.Simulation;
 import persistence.JsonWriter;
+import logs.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,7 +11,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
+import java.util.Iterator;
 
 /*
  * Represents the main window of the application with a widget
@@ -45,13 +49,41 @@ public class MainWindow {
     private void initializeFrame() {
         frame = new JFrame();
         frame.setTitle(simulation.getName());
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(900,600);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         initializePanels();
         frame.setVisible(true);
         addTimer();
+        frame.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) { }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                @SuppressWarnings("rawtypes")
+                Iterator it = EventLog.getInstance().iterator();
+                while (it.hasNext()) {
+                    System.out.println(it.next());
+                }
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) { }
+
+            @Override
+            public void windowIconified(WindowEvent e) { }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) { }
+
+            @Override
+            public void windowActivated(WindowEvent e) { }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) { }   
+        });
     }
 
     /*
@@ -272,7 +304,6 @@ public class MainWindow {
             jsonWriter.open();
             jsonWriter.write(simulation);
             jsonWriter.close();
-            System.out.println("Simulation saved!");
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write file \"" + simulation.getName() + "\".");
         }

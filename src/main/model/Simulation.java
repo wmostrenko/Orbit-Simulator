@@ -2,6 +2,7 @@ package model;
 
 import persistence.Writable;
 import java.util.ArrayList;
+import logs.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -51,6 +52,7 @@ public class Simulation implements Writable {
     public void addObject(Object object) {
         if (object.getMass() != 0) {
             objects.add(object);
+            EventLog.getInstance().logEvent(new Event("Added new object to simulation."));
         }
     }
 
@@ -63,6 +65,7 @@ public class Simulation implements Writable {
      */
     public void removeObject(int index) {
         objects.remove(index);
+        EventLog.getInstance().logEvent(new Event("Removed object from simulation."));
     }
 
     /**
@@ -168,6 +171,7 @@ public class Simulation implements Writable {
     public void setCurrentReferenceFrame(Object object) {
         currentReferenceFrame = object;
         updateObjects();
+        EventLog.getInstance().logEvent(new Event("Changed reference frame."));
     }
 
     /**
@@ -207,6 +211,7 @@ public class Simulation implements Writable {
      */
     public void changeName(String name) {
         this.name = name;
+        EventLog.getInstance().logEvent(new Event("Changed simulation name."));
     }
 
     /**
@@ -216,6 +221,7 @@ public class Simulation implements Writable {
      */
     public void changeTimeStep(double timeStep) {
         this.timeStep = timeStep;
+        EventLog.getInstance().logEvent(new Event("Changed simulation time step."));
     }
 
     public String getName() {
