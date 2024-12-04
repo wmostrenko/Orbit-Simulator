@@ -1,4 +1,4 @@
-# A Orbit Simulation (Euler's Method)
+# An Orbit Simulator (Euler's Method)
 
 ## An Introduction
 
